@@ -1,4 +1,6 @@
-# Investment DatabaseThis +
+# Investment Database +
+
 file includes concepts and implements of the database design +
+
 ## Design +
 ## Implementation +
