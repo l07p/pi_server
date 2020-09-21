@@ -1,0 +1,4 @@
+Installed PGAdmin to operate postgreSQL on pi_server:   C:\Program Files\pgAdmin 4\v4
+		
+		
+		
