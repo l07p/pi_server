@@ -1,0 +1,14 @@
+# Investment Database +
+
+file includes concepts and implements of the database design +
+
+## Design +
+## Implementation +
+
+! Entity diagram should use drawio. refer to www.draw.io
+
+### Graphic file +
+
+drawio: myfile.drawio
+
+UMLet:  myfile.uxf
