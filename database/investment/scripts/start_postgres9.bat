@@ -1,0 +1,1 @@
+"c:\Program Files\PostgreSQL\9.6\bin\pg_ctl.exe" -D "C:\Data\kmlicenser9.6" restart
