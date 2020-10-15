@@ -1,0 +1,42 @@
+= Functions design and implement +
+:toc: left
+
+This file include all functions. From design to program implementataion +
+
+
+== Functions or classes to deal with the database +
+
+=== Using googlefinance +
+
+https://pypi.org/project/googlefinance/
+
+.Python code
+|===
+|Steps |Description |Details
+
+|Install
+|$pip install googlefinance
+|$git clone https://github.com/hongtaocai/googlefinance.git + 
+$cd googlefinance + 
+$python setup.py install
+
+|Example
+|>>> from googlefinance import getQuotes +
+>>> import json +
+>>> print json.dumps(getQuotes('AAPL'), indent=2) +
+|
+[ +
+  { +
+    "Index": "NASDAQ", +
+    "LastTradeWithCurrency": "129.09", +
+    "LastTradeDateTime": "2015-03-02T16:04:29Z", +
+    "LastTradePrice": "129.09", +
+    "Yield": "1.46", +
+    "LastTradeTime": "4:04PM EST", +
+    "LastTradeDateTimeLong": "Mar 2, 4:04PM EST", +
+    "Dividend": "0.47", +
+    "StockSymbol": "AAPL", +
+    "ID": "22144" +
+  } +
+] 
+|===
