@@ -1,11 +1,7 @@
 # This is class balance of account
 class balance:
-    def __init__(self, date, value):
-        self.date = date
+    def __init__(self, value):
         self.value = value
 
-    def display():
-        print(self.value)
-
-if _
-        
+b1 = balance(10.0)
+print(b1.value)
