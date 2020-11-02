@@ -1,2 +1,4 @@
 # This is class of account
-class 
+class account:
+    def __init__(self):
+        pass
