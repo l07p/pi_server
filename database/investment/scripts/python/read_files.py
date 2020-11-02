@@ -21,10 +21,10 @@ class read_files:
  
 def main(filepath):   
     print('+++++calling class read_files.main\n')
-    wf = file_working()
-    wf._set_filepath(filepath)
-    rf = read_files(wf)
-    rf.read_zip_file()
+    # wf = file_working()
+    # wf._set_filepath(filepath)
+    # rf = read_files(wf)
+    # rf.read_zip_file()
 
     
 if __name__ == "__main__":
