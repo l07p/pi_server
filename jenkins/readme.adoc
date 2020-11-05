@@ -1,2 +1,5 @@
 = Jenkins master built in this pi server
-v1.0, 2020-11-05
+
+Version | Note
+------- | -----
+v1.0 | 2020-11-05
