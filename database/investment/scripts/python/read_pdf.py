@@ -2,13 +2,13 @@ import argparse
 import re
 import sys
 
-class Read_pdf:
-    def __init__(self, *args, **kwargs):
-        return super().__init__(*args, **kwargs)
+from pdfminer.high_level import extract_text
 
 def main(infile):
-    print(infile.read())
-    infile.close()
+    #print(infile.read())
+    #infile.close()
+    text = extract_text("/home/project/Projects/pi_server/database/investment/scripts/test_dkb.pdf")
+    print(text)
 
 if __name__ == "__main__": 
     parser = argparse.ArgumentParser(
@@ -19,9 +19,13 @@ if __name__ == "__main__":
             read pdf file and extract text.''')
     parser.print_help()
 
-    parser.add_argument('--infile', nargs='?', type=argparse.FileType('r'),
-                        default="I:\\tmp\\temporary.txt",
-                        help='input')
+    # parser.add_argument('--infile', nargs='?', type=argparse.FileType('r'),
+     #                   default="test_dkb.pdf",
+      #                  help='input')
+
+    parser.add_argument('--infile', 
+                        default="test_dkb.pdf",
+                            help='input')
 
     args = parser.parse_args()
     main(args.infile)
