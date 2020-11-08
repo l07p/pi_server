@@ -9,6 +9,7 @@ class order:
         self.date = datetime.datetime(year,month,day)
         self.stueck = stueck
         self.kurs = kurs
+        return 
 
     def build_order(self):
         return '{} {} {}'.format(self.date, self.stueck, self.kurs)
@@ -26,16 +27,20 @@ class order:
         self.kurs = float(input('input order kurs\n'))
 
 
-
-
-# o1=order(2020,10,1,4.007, 122.83)
+def main(_text):
+    print(_text)
+    o1 = order()
+    o1.set_order(2020,10,1,4.007, 122.83)
+    print(o1.build_order())
 
 
 if __name__ == '__main__':
-    o1 = order()
-    o1.set_order_date()
-    o1.set_order_stueck()
-    o1.set_order_kurs()
-
-    print(o1.build_order())
+    import argparse
     
+    parser = argparse.ArgumentParser('give text')
+    parser.add_argument('--input_text', 
+                        help='input text to be worked out', 
+                        default='you forgot inputting') 
+    
+    args = parser.parse_args()    
+    main(_text=args.input_text)  
