@@ -35,5 +35,10 @@ if __name__ == "__main__":
                         help='file path', 
                         default='I:\\tmp\\01112020111352.zip') 
     
-    args = parser.parse_args()    
+    parser.add_argument('--filename',
+                        help='file nameh', 
+                        default='01112020111352.zip') 
+    
+    args = parser.parse_args()   
+    print(args.filename) 
     main(filepath=args.filepath)
