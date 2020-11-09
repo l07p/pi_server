@@ -27,17 +27,24 @@ class order:
     def set_order_kurs(self, _kurs):
         self.kurs = float(_kurs)
 
-def main(_orderday, _stueck, _kurs):
+def main(_orderday, _stueck, _kurs, _order_product):
     o1 = order()
-    o1.orderday(_orderday)
-    o1.set_order_stueck(_stueck)
-    o1.set_order_kurs(_kurs)
-    print(o1.build_order())
+    
+    if _order_product:
+        print('function order ref product')
+    
+    else:
+        o1.orderday(_orderday)
+        o1.set_order_stueck(_stueck)
+        o1.set_order_kurs(_kurs)
+        print(o1.build_order())
     
 if __name__ == '__main__':
     import argparse
     
     parser = argparse.ArgumentParser(description='give text')
+    
+    parser.add_argument('--order_product', default=False, action='store_true')
     
     parser.add_argument('--orderday',
                         help='input date of the order',
@@ -53,4 +60,4 @@ if __name__ == '__main__':
     
     args = parser.parse_args()
 
-    main(_orderday=args.orderday, _stueck=args.stueck, _kurs=args.kurs)  
+    main(_orderday=args.orderday, _stueck=args.stueck, _kurs=args.kurs, _order_product=args.order_product)  
