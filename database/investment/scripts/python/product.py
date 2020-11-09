@@ -35,7 +35,7 @@ class Product:
 
     def insert_product(self, _wkn, _isin, _name, _google_symbol):
         """ insert a new into the products table """
-        sql = """INSERT INTO products(wkn, isin, google_symbol, name)
+        sql = """INSERT INTO products(wkn, isin, name, google_symbol)
                 VALUES(%s, %s, %s, %s) RETURNING id;"""
         conn = None
         product_id = None
