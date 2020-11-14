@@ -1,0 +1,29 @@
+++++++ table products:
+ id |  wkn   |     isin     | google_symbol |                            name                             
+----+--------+--------------+---------------+-------------------------------------------------------------
+ 10 | 541779 | FR0007056841 | DJAM          | LYX.D.JON.IN.AV.U.ETF D
+ 11 | 593397 | DE0005933972 | EXS2          | ISHARES TECDAX UCITS ETF DE
+  1 | 628930 | DE0006289309 | EXX1          | iShares EURO STOXX Banks 30-15 UCI
+  9 | A0H08M | DE000A0H08M3 | EXH1          | iShares STOXX Europe 600 Oil & Gas UCITS ETF (DE)
+  4 | A0Q4R2 | DE000A0Q4R28 | EXV5          | iShares STOXX Europe 600 Automobiles & Parts UCITS ETF (DE)
+ 12 | A0YEDL | IE00B53SZB19 | SXRV          | iShares NASDAQ 100 UCITS ETF
+  3 | DBX1DA | LU0274211480 | DBXD          | Xtrackers DAX® UCITS ETF 1
+  2 | DBX1SM |              | DBXS          | XTR.SWITZERLAND 1D
+  8 | LYX0FS | LU0496786574 | LYPS          | Lyxor S&P 500 UCITS ETF
+(9 rows)
+
+[pi_server] $ /bin/bash /tmp/jenkins3852492738977207432.sh
+++++++ table orders:
+          date          |  kurs  | id | stueck  | order_nr 
+------------------------+--------+----+---------+----------
+ 2020-10-01 00:00:00+00 | 122.96 |  1 |    4.07 |         
+ 2020-10-05 00:00:00+00 | 28.305 |  3 | 17.6647 |         
+ 2020-10-05 00:00:00+00 |  577.6 |  4 |  0.8657 |         
+(3 rows)
+
+[pi_server] $ /bin/bash /tmp/jenkins12229078692775681360.sh
+++++++ table accounts:
+ id |    name    
+----+------------
+  2 | DKB_Depot
+  1 | consors505
