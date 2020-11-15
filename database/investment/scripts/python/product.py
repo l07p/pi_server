@@ -8,30 +8,9 @@ import sys
 class Product:
     def __init__(self):
         pass
-    
-    def list_products(self):
-        try:
-            conn = psycopg2.connect("dbname='investment' user='pi' host='192.168.178.54' password='ueber500mal'")
-            print('connected to database')
 
-            cur = conn.cursor()
-            cur.execute("SELECT * FROM products ORDER BY id")
-            
-            rows = cur.fetchall()
-            col_names = [desc[0] for desc in cur.description]
-
-            for row in rows:
-                self.wkn = row[1]
-                self.name = row[4]
-                print(f'{self.wkn} {self.name}')
-
-        except psycopg2.DatabaseError as e:
-            print (f'Error {e}')
-            sys.exit(1)
-
-        finally:
-            if conn:
-                conn.close()        
+    def update_with_name(self, _name):
+        pass
 
     def insert_product(self, _wkn, _isin, _name, _google_symbol):
         """ insert a new into the products table """
@@ -63,10 +42,7 @@ class Product:
 def main(_readonly, _wkn, _isin, _name, _google_symbol):
 
     p = Product()
-    if _readonly:
-        p.list_products()
-    else:
-        print(p.insert_product(_wkn, _isin, _name, _google_symbol))
+    print(p.insert_product(_wkn, _isin, _name, _google_symbol))
 
 
 
@@ -74,8 +50,6 @@ if __name__ == "__main__":
     import argparse
     
     parser = argparse.ArgumentParser(description='insert, update or list only the product datasets')
-    
-    parser.add_argument('--readonly', default=False, action='store_true')
     
     parser.add_argument('--wkn',
                         help='input wkn of the product',
