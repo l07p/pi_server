@@ -9,22 +9,11 @@ class Order:
         pass
 
     """     
-    def set_order(self, year, month, day, stueck, kurs):
-        self.date = datetime.datetime(year,month,day)
-        self.stueck = stueck
-        self.kurs = kurs
-        return 
-    
-    def orderday(self, day_str):
-        try:
-            self.date = datetime.datetime.strptime(day_str, "%Y-%m-%d")
-        except ValueError:
-            msg = "Given Date ({0}) not valid! Expected format, YYYY-MM-DD!".format(arg_date_str)
-            raise argparse.ArgumentTypeError(msg)    
-        
-
-    def build_order(self):
-        return '{} {} {}'.format(self.date, self.stueck, self.kurs)
+    calculate einstand-kurs !!!!!!!!!
+ SELECT SUM(kurs * stueck + provision)/SUM(stueck)
+    FROM public.orders
+	WHERE product_id = 4;
+ 
     """
     
     def set_order_day(self, _date):

@@ -9,9 +9,6 @@ class Product:
     def __init__(self):
         pass
 
-    def update_with_name(self, _name):
-        pass
-
     def insert_product(self, _wkn, _isin, _name, _google_symbol):
         """ insert a new into the products table """
         sql = """INSERT INTO products(wkn, isin, name, google_symbol)
@@ -37,12 +34,52 @@ class Product:
             if conn is not None:
                 conn.close()
 
+        return product_id    
+    
+    def list_orders(self, _product_name):
+
+        conn = None
+        product_id = None
+        s_var = None
+        try:
+            # connect to the PostgreSQL database
+            conn = psycopg2.connect("dbname='investment' user='pi' host='192.168.178.54' password='ueber500mal'")
+            # create a new cursor
+            cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            
+            # execute the set product 
+            sql = """SELECT * FROM products WHERE name LIKE %s;"""
+            s_var = ''.join(('%', _product_name, '%'))
+            cur.execute(sql, (s_var,))
+           
+            row = cur.fetchone()
+            self.id = row['id']
+            self.name = row['name']
+            self.wkn = row['wkn']
+            self.isin = row['isin']
+            self.google_symbol = row['google_symbol']
+            self.category_id = row['category_id']
+            
+            # list orders
+            sql = """SELECT * FROM orders WHERE product_id = %s;"""
+            cur.execute(sql, (self.id,))
+            rows = cur.fetchall()
+            
+            # close communication with the database
+            cur.close()
+            product_id = self.id
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
+        finally:
+            if conn is not None:
+                conn.close()
+
         return product_id
 
-def main(_readonly, _wkn, _isin, _name, _google_symbol):
+def main(_wkn, _isin, _name, _google_symbol):
 
     p = Product()
-    print(p.insert_product(_wkn, _isin, _name, _google_symbol))
+    print(p.list_orders('%Oil%'))
 
 
 
@@ -69,4 +106,4 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
 
-    main(_readonly=args.readonly, _wkn=args.wkn, _isin=args.isin, _name=args.name, _google_symbol=args.google_symbol)
+    main(_wkn=args.wkn, _isin=args.isin, _name=args.name, _google_symbol=args.google_symbol)
