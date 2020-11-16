@@ -3,10 +3,12 @@
 
 import psycopg2
 import psycopg2.extras
+import pandas as pd
 import sys
 
 class Product:
     def __init__(self):
+        self.id = 0
         pass
 
     def insert_product(self, _wkn, _isin, _name, _google_symbol):
@@ -60,14 +62,20 @@ class Product:
             self.google_symbol = row['google_symbol']
             self.category_id = row['category_id']
             
+            product_id = self.id
+            
             # list orders
-            sql = """SELECT * FROM orders WHERE product_id = %s;"""
-            cur.execute(sql, (self.id,))
+            sql = """SELECT date, kurs, stueck, provision, product_id FROM orders WHERE product_id = %s
+                    ORDER BY date;"""
+            cur.execute(sql, (product_id,))
             rows = cur.fetchall()
+            column_names = ["date", "kurs", "stueck","provision", "product_id"]
+            df = pd.DataFrame(rows, columns=column_names)
+            print(df)
             
             # close communication with the database
             cur.close()
-            product_id = self.id
+            
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
         finally:
@@ -79,7 +87,7 @@ class Product:
 def main(_wkn, _isin, _name, _google_symbol):
 
     p = Product()
-    print(p.list_orders('%Oil%'))
+    print(p.list_orders(_name))
 
 
 
