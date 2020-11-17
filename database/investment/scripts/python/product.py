@@ -44,6 +44,7 @@ class Product:
         product_id = None
         s_var = None
         try:
+            print('++++++ list product: %s ------------------', _product_name)
             # connect to the PostgreSQL database
             conn = psycopg2.connect("dbname='investment' user='pi' host='192.168.178.54' password='ueber500mal'")
             # create a new cursor
@@ -73,6 +74,16 @@ class Product:
             df = pd.DataFrame(rows, columns=column_names)
             print(df)
             
+            # summary stueck and kurs plus provision
+            sql = """SELECT SUM(kurs), SUM(stueck), SUM(provision) FROM orders WHERE product_id = %s
+                    ;"""
+            cur.execute(sql, (product_id,))
+            result = cur.fetchone()
+            keys = ['sum_kurs ', 'sum_stuecke ', 'sum_provision ']
+            df = pd.DataFrame(result, keys)
+            print(df)
+            
+            
             # close communication with the database
             cur.close()
             
@@ -87,7 +98,7 @@ class Product:
 def main(_wkn, _isin, _name, _google_symbol):
 
     p = Product()
-    print(p.list_orders(_name))
+    ret = p.list_orders(_name)
 
 
 
