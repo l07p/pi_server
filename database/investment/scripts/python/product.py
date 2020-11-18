@@ -11,6 +11,9 @@ class Product:
         self.id = 0
         pass
 
+    def called(self):
+        print('++++++ product created')
+
     def insert_product(self, _wkn, _isin, _name, _google_symbol):
         """ insert a new into the products table """
         sql = """INSERT INTO products(wkn, isin, name, google_symbol)
