@@ -12,31 +12,19 @@ class report_products:
 
 def main():
     p1 = Product()
-    p1.called()
-    print('report products')
+    p1.list_all_products_orders()
 
 
 
 if __name__ == "__main__":
     import argparse
     
-    parser = argparse.ArgumentParser(description='insert, update or list only the product datasets')
+    parser = argparse.ArgumentParser(description='report all product according to given period')
     
-    parser.add_argument('--wkn',
-                        help='input wkn of the product',
-                        default='A0Q4R2')
+    parser.add_argument('--from_date',
+                        help='input from date for duration',
+                        default='2020-01-01')
     
-    parser.add_argument('--isin',
-                        help='input isin of the product',
-                        default='DE000A0Q4R28')
-    
-    parser.add_argument('--name',
-                        help='input name of the product',
-                        default='iShares STOXX Europe 600 Automobiles & Parts UCITS ETF (DE)')
-        
-    parser.add_argument('--google_symbol',
-                        help='input google_symbol of the product',
-                        default='EXV5')
     
     args = parser.parse_args()
 
