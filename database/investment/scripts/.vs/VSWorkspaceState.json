@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\python"
+    "\\python",
+    "\\sql"
   ],
   "SelectedNode": "\\python\\report_products.py",
   "PreviewInSolutionExplorer": false

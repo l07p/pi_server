@@ -45,15 +45,20 @@ class Product:
         self.short_names = ["Automobiles","Banks","DAX","JON","NASDAQ","Oil","S&P","SWITZERLAND","TECDAX"]
 
     def list_all_products_orders(self):
+        ret = 0.0
         self.product_short_names()
         for nm in self.short_names:
             self.list_orders(nm)
+            ret += float(self.total_cost)
+
+        print("\n +++++++++++++++++ total investment: ",'{:9,.2f}'.format(ret))
+
     
     def list_orders(self, _product_name):
 
         conn = None
-        product_id = None
-        s_var = None
+        product_id = 0
+        s_var = ''
         try:
             print('\n++++++ list product: %s ------------------', _product_name)
             # connect to the PostgreSQL database
@@ -86,14 +91,15 @@ class Product:
             print(df)
             
             # summary stueck and kurs plus provision
-            sql = """SELECT SUM(kurs), SUM(stueck), SUM(provision) FROM orders WHERE product_id = %s
+            sql = """SELECT SUM(kurs*stueck+provision), SUM(stueck), SUM(provision) FROM orders WHERE product_id = %s
                     ;"""
             cur.execute(sql, (product_id,))
             result = cur.fetchone()
-            keys = ['sum_kurs ', 'sum_stuecke ', 'sum_provision ']
+            keys = ['total_costs ', 'sum_stuecke ', 'sum_provision ']
             df = pd.DataFrame(result, keys)
             print(df)
-            
+            self.total_cost = result[0]
+            self.sum_stueck = result[1]
             
             # close communication with the database
             cur.close()
