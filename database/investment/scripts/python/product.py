@@ -51,7 +51,7 @@ class Product:
             self.list_orders(nm)
             ret += float(self.total_cost)
 
-        print("\n +++++++++++++++++ total investment: ",'{:9,.2f}'.format(ret))
+        print("\n +++++++++++++++++ total investment: ",'{:7,.2f}'.format(ret))
 
     
     def list_orders(self, _product_name):
@@ -82,7 +82,7 @@ class Product:
             product_id = self.id
             
             # list orders
-            sql = """SELECT date, kurs, stueck, provision, product_id FROM orders WHERE product_id = %s
+            sql = """SELECT date::timestamp::date, kurs, stueck, provision, product_id FROM orders WHERE product_id = %s
                     ORDER BY date;"""
             cur.execute(sql, (product_id,))
             rows = cur.fetchall()
@@ -95,11 +95,13 @@ class Product:
                     ;"""
             cur.execute(sql, (product_id,))
             result = cur.fetchone()
-            keys = ['total_costs ', 'sum_stuecke ', 'sum_provision ']
-            df = pd.DataFrame(result, keys)
-            print(df)
+            # keys = ['total_costs ', 'sum_stuecke ', 'sum_provision ']
+            # df = pd.DataFrame(result, keys)
+            # print(df)
             self.total_cost = result[0]
             self.sum_stueck = result[1]
+            print("Invest_sum: ", '{:7,.2f}'.format(self.total_cost))
+            print("Einstandkurs: ", '{:7,.2f}'.format(self.total_cost/self.sum_stueck))
             
             # close communication with the database
             cur.close()
