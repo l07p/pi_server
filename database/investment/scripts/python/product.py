@@ -100,7 +100,7 @@ class Product:
             # print(df)
             self.total_cost = result[0]
             self.sum_stueck = result[1]
-            print("sum_stueck: ", '{:7,.2f}'.format(self.sum_stueck))
+            print("sum_stueck: ", '{:7,.4f}'.format(self.sum_stueck))
             print("Einstandkurs: ", '{:7,.2f}'.format(self.total_cost/self.sum_stueck))
             
             # close communication with the database
