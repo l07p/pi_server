@@ -9,9 +9,10 @@ class Read_text:
     def read_consors(self, _text):
         self.text = _text
 
+    def extract_consors_text(self):
+        pass
 
 
- 
 def main(_text):   
     r1 = Read_text()
     r1.read_consors(_text)
