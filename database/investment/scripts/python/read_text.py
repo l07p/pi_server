@@ -1,18 +1,21 @@
 # This class handles text in different formats
+import order
 
-
-class read_text:
+class Read_text:
     def __init__(self):
+        _rd_order = order.Order()
         pass
         
-    def text2order(self, _text):
-        return _text
+    def read_consors(self, _text):
+        self.text = _text
+
 
 
  
 def main(_text):   
-    r1 = read_text()
-    print(r1.text2order(_text))
+    r1 = Read_text()
+    r1.read_consors(_text)
+    print(r1.text)
 
     
 if __name__ == "__main__":
@@ -21,7 +24,17 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser('give text')
     parser.add_argument('--input_text', 
                         help='input text to be worked out', 
-                        default='you forgot inputting') 
+                        default='''Ihre Order mit der Ordernummer 177079739 wurde ausgeführt:
+                        Ihr Depot: ******505
+                        Orderart: Kauf
+                        Name: XTR.EURO STOXX 50 1D
+                        WKN: DBX1EU
+                        Handelsplatz: Sparplan
+                        Stück: 14,7776
+                        Orderzusatz: Market Order
+                        Ausführungskurs: 33,835 EUR
+                        Wir wünschen Ihnen weiterhin viel Erfolg bei Ihren Finanzgeschäften!'''
+                        ) 
     
     args = parser.parse_args()    
     main(_text=args.input_text)

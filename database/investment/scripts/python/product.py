@@ -42,7 +42,7 @@ class Product:
         return product_id    
 
     def product_short_names(self):
-        self.short_names = ["Automobiles","Banks","DAX","JON","NASDAQ","Oil","S&P","SWITZERLAND","TECDAX"]
+        self.short_names = ["Automobiles","Banks","Xtrackers DAX","XTR.EURO STOXX","JON","NASDAQ","Oil","S&P","SWITZERLAND","TECDAX"]
 
     def list_all_products_orders(self):
         ret = 0.0
@@ -60,7 +60,7 @@ class Product:
         product_id = 0
         s_var = ''
         try:
-            print('\n++++++ list product: %s ------------------', _product_name)
+            print('\n++++++ list product: {} ------------------'.format(_product_name))
             # connect to the PostgreSQL database
             conn = psycopg2.connect("dbname='investment' user='pi' host='192.168.178.54' password='ueber500mal'")
             # create a new cursor

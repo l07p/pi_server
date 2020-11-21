@@ -28,6 +28,15 @@ class Order:
     def set_order_provision(self, _provision):
         self.provision = float(_provision)
 
+    def set_order_type_id(self, _type_id):
+        self.provision = int(_type_id)
+
+    def set_order_product_id(self, _product_id):
+        self.provision = int(_product_id)
+
+    def set_order_account_id(self, _account_id):
+        self.provision = int(_account_id)
+
     def insert_order(self):
         '''
         The stuff in side the function insert dataset to table orders
