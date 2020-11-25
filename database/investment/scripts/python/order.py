@@ -7,6 +7,7 @@ class Order:
     
     def __init__(self):
         self.order_features = ["Orderart", "WKN", "wkn", "Stück", "Ausführungskurs", "Kurs", "kurs"]
+        self.stueck = 0.0
         pass
 
     """     

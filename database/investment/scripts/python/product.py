@@ -9,11 +9,55 @@ import sys
 class Product:
     def __init__(self):
         self.id = 0
-        pass
+        self.wkn = ''
+
 
     def called(self):
         print('++++++ product created')
 
+    def get_product_id_with_wkn(self, _wkn):
+        """ get id with product wkn from products table """
+        sql = """SELECT public.get_product_id_with_wkn(%s);"""
+        conn = None
+        product_id = None
+        try:
+            # connect to the PostgreSQL database
+            conn = psycopg2.connect("dbname='investment' user='pi' host='192.168.178.54' password='ueber500mal'")
+            'SELECT public.get_product_id_with_wkn(%s);'
+>>> conn = None
+>>> product_id = 0
+>>> conn = psycopg2.connect("dbname='investment' user='pi' host='192.168.178.54' password='ueber500mal'")
+>>> cur = conn.cursor()
+>>> cur.execute(sql,('DBX1SM'))
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: not all arguments converted during string formatting
+>>> cur.execute(sql,'DBX1SM')
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: not all arguments converted during string formatting
+>>> cur.execute(sql,('DBX1SM',))
+>>> result = cur.fetchone()
+>>> result
+(9,)
+            # create a new cursor
+            cur = conn.cursor()
+            # execute the INSERT statement
+            cur.execute(sql, (_wkn))
+            # get the generated id back
+            product_id = cur.fetchone()[0]
+            # commit the changes to the database
+            conn.commit()
+            # close communication with the database
+            cur.close()
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
+        finally:
+            if conn is not None:
+                conn.close()
+
+        return product_id
+        
     def insert_product(self, _wkn, _isin, _name, _google_symbol):
         """ insert a new into the products table """
         sql = """INSERT INTO products(wkn, isin, name, google_symbol)

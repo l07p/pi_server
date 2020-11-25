@@ -1,10 +1,12 @@
 # This class handles text in different formats
-
+import re
 from order import Order
+from product import Product
 
 class Read_text:
     def __init__(self):
-        read_order = Order()
+        self.read_order = Order()
+        self.read_product = Product()
         self.text = ''
         self.account_name = ''
         
@@ -12,21 +14,38 @@ class Read_text:
         self.text = _text
         self.account_name = _account_name
     
+    def extract_depot_from_text(self):
+        ret = ''
+        for dp in self.text.splitlines():
+            match = re.search(r'Ihr Depot:', dp)
+            if match:
+                ret = dp.split(':')[1]
+                break
+        return ret
+        
+    def extract_stueck_from_text(self):
+        ret = ''
+        for dp in self.text.splitlines():
+            match = re.search(r'Stück:', dp)
+            if match:
+                ret = dp.split(':')[1]
+                break
+        return ret
+
     def extract_text_to_order(self):
         if self.text != '':
-            print(self.read_order.order_features)
+            self.read_order.set_order_stueck(14.7776)
         else:
-            pass
-        pass
-        
+            pass        
 
 
 def main(_text, _account_name):   
     print('+++++++++++++++++++++++++\n')
     r1 = Read_text()
     r1.text_from_account(_text, _account_name)
+    print(r1.extract_depot_from_text())
     r1.extract_text_to_order()
-    print('{} \n{}'.format(r1.account_name, r1.text))
+    # print('{} \n{}'.format(r1.account_name, r1.text))
 
     
 if __name__ == "__main__":
