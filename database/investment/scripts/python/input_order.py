@@ -21,7 +21,7 @@ def main(_orderday, _stueck, _kurs, _order_product):
     o1.set_order_stueck(_stueck)
     o1.set_order_kurs(_kurs)
     print(o1.build_order())
-    o1.insert_order()
+    #o1.insert_order()
     
 if __name__ == '__main__':
     import argparse

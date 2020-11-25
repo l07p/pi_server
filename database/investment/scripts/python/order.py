@@ -6,6 +6,7 @@ import psycopg2.extras
 class Order:
     
     def __init__(self):
+        self.order_features = ["Orderart", "WKN", "wkn", "Stück", "Ausführungskurs", "Kurs", "kurs"]
         pass
 
     """     
@@ -15,7 +16,7 @@ class Order:
 	WHERE product_id = 4;
  
     """
-    
+
     def set_order_day(self, _date):
         self.date = _date
 
@@ -67,13 +68,14 @@ class Order:
 
 def main(_orderday, _stueck, _kurs, _provision):
     o1 = Order()
+    print(o1.order_features)
     
     #o1.orderday(_orderday)
-    o1.set_order_day(_orderday)
-    o1.set_order_stueck(_stueck)
-    o1.set_order_kurs(_kurs)
-    o1.set_order_provision(_provision)
-    print(o1.insert_order())
+    # o1.set_order_day(_orderday)
+    # o1.set_order_stueck(_stueck)
+    # o1.set_order_kurs(_kurs)
+    # o1.set_order_provision(_provision)
+    # print(o1.insert_order())
     
 if __name__ == '__main__':
     import argparse
