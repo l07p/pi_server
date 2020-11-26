@@ -23,31 +23,11 @@ class Product:
         try:
             # connect to the PostgreSQL database
             conn = psycopg2.connect("dbname='investment' user='pi' host='192.168.178.54' password='ueber500mal'")
-            'SELECT public.get_product_id_with_wkn(%s);'
->>> conn = None
->>> product_id = 0
->>> conn = psycopg2.connect("dbname='investment' user='pi' host='192.168.178.54' password='ueber500mal'")
->>> cur = conn.cursor()
->>> cur.execute(sql,('DBX1SM'))
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-TypeError: not all arguments converted during string formatting
->>> cur.execute(sql,'DBX1SM')
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-TypeError: not all arguments converted during string formatting
->>> cur.execute(sql,('DBX1SM',))
->>> result = cur.fetchone()
->>> result
-(9,)
-            # create a new cursor
             cur = conn.cursor()
-            # execute the INSERT statement
-            cur.execute(sql, (_wkn))
+            cur.execute(sql,(_wkn,))
+
             # get the generated id back
             product_id = cur.fetchone()[0]
-            # commit the changes to the database
-            conn.commit()
             # close communication with the database
             cur.close()
         except (Exception, psycopg2.DatabaseError) as error:
@@ -161,7 +141,8 @@ TypeError: not all arguments converted during string formatting
 def main(_wkn, _isin, _name, _google_symbol):
 
     p = Product()
-    ret = p.list_all_products_orders()
+    ret = p.get_product_id_with_wkn('DBX1SM')
+    #ret = p.list_all_products_orders()
     #ret = p.list_orders(_name)
 
 

@@ -24,17 +24,20 @@ class Read_text:
         return ret
         
     def extract_stueck_from_text(self):
-        ret = ''
+        ret = 0.0
+        s = ''
         for dp in self.text.splitlines():
             match = re.search(r'Stück:', dp)
             if match:
-                ret = dp.split(':')[1]
+                s = dp.split(':')[1]
+                s = s.replace('.', '').replace(',','.')
+                ret = float(s)
                 break
         return ret
 
     def extract_text_to_order(self):
         if self.text != '':
-            self.read_order.set_order_stueck(14.7776)
+            self.read_order.set_order_stueck(self.extract_stueck_from_text())
         else:
             pass        
 
@@ -42,10 +45,14 @@ class Read_text:
 def main(_text, _account_name):   
     print('+++++++++++++++++++++++++\n')
     r1 = Read_text()
-    r1.text_from_account(_text, _account_name)
-    print(r1.extract_depot_from_text())
+    r1.text_from_account(_text,_account_name)
     r1.extract_text_to_order()
+    #ret = r1.read_product.get_product_id_with_wkn('DBX1SM')
+    # r1.text_from_account(_text, _account_name)
+    # print(r1.extract_depot_from_text())
+    # r1.extract_text_to_order()
     # print('{} \n{}'.format(r1.account_name, r1.text))
+    pass
 
     
 if __name__ == "__main__":
