@@ -16,9 +16,13 @@ class Read_csv:
                         "targo_tages"  ]
 
     def read_consors_depot(self):
-        df = pd.read_csv(self.filepath, encoding='utf8', low_memory=False, delimiter=';', skiprows=6, nrows=7)   
+        df = pd.read_csv(self.filepath, encoding='utf8', low_memory=False, sep=';', skiprows=6, nrows=7)   
         df = df.drop(columns=['Währung/Prozent', 'Währung/Prozent.1', 'Währung/Prozent.2', 'Währung/Prozent.3'])
-        df.drop(df.columns[df.columns.str.contains('unnamed',case = False)],axis = 1, inplace = True)            
+        float_data = ['Stück/Nominal', 'Einstandskurs inkl. NK', 'Einstandswert','Veränderung Intraday', 'Kurs', 'Gesamtwert EUR', 'Entwicklung absolut', 'Entwicklung prozentual']
+        for i in float_data:
+            df[i] = df[i].str.replace('.', '')
+            df[i] = df[i].str.replace(',', '.').astype(float)
+
         return df.to_dict('records')    
 
     def read_dkb_depot(self):      
