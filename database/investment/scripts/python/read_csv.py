@@ -23,12 +23,23 @@ class Read_csv:
             df[i] = df[i].str.replace('.', '')
             df[i] = df[i].str.replace(',', '.').astype(float)
 
-        return df.to_dict('records')    
+        return df
 
     def read_dkb_depot(self):      
         df = pd.read_csv(self.filepath, encoding="ISO-8859-1", low_memory=False, delimiter=';', skiprows=5,nrows=14)
         df.drop(df.columns[df.columns.str.contains('unnamed',case = False)],axis = 1, inplace = True) 
-        return df.to_dict('records')    
+        df.drop(columns="Dev. Kurs")
+        float_data = ['Bestand', 'Kurs', 'Gewinn / Verlust','Einstandswert', 'Kurswert in Euro']
+        for i in float_data:
+            df[i] = df[i].str.replace('.', '')
+            df[i] = df[i].str.replace(',', '.').astype(float)
+
+        df['Einstandskurs'] = df['Einstandswert'] / df['Bestand']
+        return df
+
+    def read_account(self, _account):
+        if _account == 'DKB_depot':
+            return self.read_dkb_depot()
 
     def myfunc(self):
         print(r'{}'. format(self.filepath))
@@ -43,12 +54,13 @@ class Read_csv:
 # for i in dd:
 #     print(i)
 
-def main(_filepath):
+def main(_filepath, _account):
     o1 = Read_csv(_filepath)
     #dd = o1.read_dkb_depot()
-    dd = o1.read_consors_depot()
-    for i in dd:
-        print(i)
+    dd = o1.read_account(_account)
+    print(dd)
+    # for i in dd:
+    #     print(i)
 
 
 if __name__ == "__main__":
@@ -58,8 +70,13 @@ if __name__ == "__main__":
     
     parser.add_argument('--filepath',
                         help='input file and its folder together',
-                        default=r"C:\Users\saver\Downloads\Depotübersicht_788267505 (2).csv")
+                        default=r"I:\going_on\finance\DKB\502081722 (8).csv")
+    parser.add_argument('--account',
+                        help='input account name',
+                        default=r"DKB_depot")
+
+
     
     args = parser.parse_args()
 
-    main(_filepath=args.filepath)
+    main(_filepath=args.filepath, _account=args.account)
