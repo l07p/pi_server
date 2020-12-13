@@ -43,7 +43,11 @@ class Read_csv:
         dd = self._df.to_dict('records')
         for i in dd:
             if i['ISIN / WKN'] in v1.isin:
-                print(i['Bestand'])
+                _stueck = i['Bestand']
+                _isin = i['ISIN / WKN']
+                _einstandskurs = i['Einstandskurs']
+                print('{1}  {0}  {2}'.format(_stueck, _isin, _einstandskurs))
+                v1.update_etf_cell(_isin, _stueck, _einstandskurs)
         pass
 
     def read_account(self, _account):

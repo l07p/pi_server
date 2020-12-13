@@ -60,7 +60,6 @@ def tests():
 
 def main(_json_path):
     o1 = Google_sheets(_json_path)
-    o1.update_etf_cell('DE0006289309',73.0, 7)
     wsheet = o1.get_wsheet('etf')
     df = pd.DataFrame(wsheet.get_all_records())
     print(df[['Stueck', 'Einstandskurs', 'EinstandsWert', 'Kurs','Kurswert']])
