@@ -1,9 +1,11 @@
 import pandas as pd
 from collections import OrderedDict, defaultdict
+from google_sheets import Google_sheets
 
 class Read_csv:
     def __init__(self, _filepath):
         self.filepath = _filepath 
+        self._df = None
         self.accounts = ["Consors_depot",          
                         "DKB_depot",              
                         "DKB_giro",               
@@ -22,8 +24,7 @@ class Read_csv:
         for i in float_data:
             df[i] = df[i].str.replace('.', '')
             df[i] = df[i].str.replace(',', '.').astype(float)
-
-        return df
+        self._df = df
 
     def read_dkb_depot(self):      
         df = pd.read_csv(self.filepath, encoding="ISO-8859-1", low_memory=False, delimiter=';', skiprows=5,nrows=14)
@@ -35,18 +36,22 @@ class Read_csv:
             df[i] = df[i].str.replace(',', '.').astype(float)
 
         df['Einstandskurs'] = df['Einstandswert'] / df['Bestand']
-        return df
+        self._df = df
+
+    def update_sheet_values(self, _json_path):
+        v1 = Google_sheets(_json_path)
+        dd = self._df.to_dict('records')
+        for i in dd:
+            if i['ISIN / WKN'] in v1.isin:
+                print(i['Bestand'])
+        pass
 
     def read_account(self, _account):
         if _account == 'DKB_depot':
-            return self.read_dkb_depot()
+            self.read_dkb_depot()
 
     def myfunc(self):
         print(r'{}'. format(self.filepath))
-
-# f1 = Read_csv(r"C:\Users\saver\Downloads\502081722b.csv")
-# f1.myfunc()
-
 
 
 # dd = df.to_dict('records')
@@ -54,13 +59,10 @@ class Read_csv:
 # for i in dd:
 #     print(i)
 
-def main(_filepath, _account):
+def main(_filepath, _account, _json_path):
     o1 = Read_csv(_filepath)
-    #dd = o1.read_dkb_depot()
-    dd = o1.read_account(_account)
-    print(dd)
-    # for i in dd:
-    #     print(i)
+    o1.read_account(_account)
+    o1.update_sheet_values(_json_path)
 
 
 if __name__ == "__main__":
@@ -75,8 +77,10 @@ if __name__ == "__main__":
                         help='input account name',
                         default=r"DKB_depot")
 
+    parser.add_argument('--json_path',
+                        help='input json file path',
+                        default=r"C:\Users\saver\AppData\gspread\SheetsPython-ea71b57285ec.json")
 
-    
     args = parser.parse_args()
 
-    main(_filepath=args.filepath, _account=args.account)
+    main(_filepath=args.filepath, _account=args.account, _json_path = args.json_path)

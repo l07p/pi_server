@@ -9,8 +9,8 @@ class Google_sheets:
         gc = gspread.service_account(filename=json_path)
         self.gsheet = gc.open("Financial statements")
         self.isin = [
-            'x',
-            'xx',
+            'xxxxxxxxxx',
+            'xxyyyyyyyy',
             'DE0006289309',
             'DE000A0Q4R28',
             'LU0274211217',
