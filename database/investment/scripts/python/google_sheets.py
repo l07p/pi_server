@@ -22,6 +22,21 @@ class Google_sheets:
             'IE00B53SZB19',
             'LU0274221281'
             ]
+        self.wkn = [
+            'aaaaaa',
+            'bbbbbb',
+            '628930',
+            'A0Q4R2',
+            'DBX1EU',
+            'DBX1DA',
+            'LYX0FS',
+            'A0H08M',
+            '541779',
+            '593397',
+            'A0YEDL',
+            'DBX1SM0',
+            'DBX1SM'
+        ]
 
     def get_wsheet(self, _wsheet):
         wsheet = self.gsheet.worksheet(_wsheet)
@@ -30,6 +45,14 @@ class Google_sheets:
     def update_etf_cell(self, _isin, _stueck_value,_einstandskurs_value):
         wsheet = self.gsheet.worksheet('etf')
         _row = self.isin.index(_isin)
+        _pos = 'F' + str(_row)
+        wsheet.update(_pos,_stueck_value)
+        _pos = 'G' + str(_row)
+        wsheet.update(_pos,_einstandskurs_value)
+            
+    def update_etf_cell_wi_wkn(self, _wkn, _stueck_value,_einstandskurs_value):
+        wsheet = self.gsheet.worksheet('etf')
+        _row = self.wkn.index(_wkn)
         _pos = 'F' + str(_row)
         wsheet.update(_pos,_stueck_value)
         _pos = 'G' + str(_row)
