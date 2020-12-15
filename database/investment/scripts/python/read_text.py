@@ -2,6 +2,8 @@
 import re
 from order import Order
 from product import Product
+import mailparser
+import pandas as pd
 
 class Read_text:
     def __init__(self):
@@ -9,7 +11,46 @@ class Read_text:
         self.read_product = Product()
         self.text = ''
         self.account_name = ''
+        self.mail = None
+        self.df = None
+
+    def text_from_consors_email(self, _filepath):
+        try:
+            self.mail = mailparser.parse_from_file(_filepath)
+            self.text = self.mail.body
+        except:
+            return None
         
+    def dictionary_from_consors_email_text(self):
+        if self.text != '':
+            lines = self.text.splitlines()
+            d = {'key':'value'}
+            for i in lines:
+                x = i.split(":")
+                if len(x) == 2:
+                    d[x[0]] = x[1]
+            return d
+        else:
+            return None
+    def convert_dict_to_dataframe(self, _dict):
+        _df = pd.DataFrame.from_dict([_dict])
+        _df = _df.drop(columns=['Gnral (Generaldirektor)', "Prsident du Conseil d'Administration (Prsident des Verwaltungsrates)", 'Standort Nrnberg', "Ihre Order mit der Ordernummer 183977051 wurde ausgefhrt"])
+        float_data = ['Stck', 'Ausfhrungskurs']
+        for i in float_data:
+            _df[i] = _df[i].str.replace('EUR', '')
+            _df[i] = _df[i].str.replace('.', '')
+            _df[i] = _df[i].str.replace(',', '.').astype(float)
+        self.df = _df
+
+    def order_read_from_consors_email(self, _dict):
+            _wkn = _dict['WKN']
+            # convert_comma_decimal = lambda x : (
+            #     x = x.str.replace('.', '')
+            #     x = x.str.replace(',', '.').astype(float)
+            # )
+
+
+
     def text_from_account(self, _text, _account_name):
         self.text = _text
         self.account_name = _account_name
@@ -42,16 +83,21 @@ class Read_text:
             pass        
 
 
-def main(_text, _account_name):   
+def main(_filepath):   
     print('+++++++++++++++++++++++++\n')
     r1 = Read_text()
-    r1.text_from_account(_text,_account_name)
-    r1.extract_text_to_order()
-    #ret = r1.read_product.get_product_id_with_wkn('DBX1SM')
-    # r1.text_from_account(_text, _account_name)
-    # print(r1.extract_depot_from_text())
+    r1.text_from_consors_email(_filepath)
+    dd = r1.dictionary_from_consors_email_text() 
+    r1.convert_dict_to_dataframe(dd)      
+
+    print(r1.df)
+    # r1.text_from_account(_text,_account_name)
     # r1.extract_text_to_order()
-    # print('{} \n{}'.format(r1.account_name, r1.text))
+    # #ret = r1.read_product.get_product_id_with_wkn('DBX1SM')
+    # # r1.text_from_account(_text, _account_name)
+    # # print(r1.extract_depot_from_text())
+    # # r1.extract_text_to_order()
+    # # print('{} \n{}'.format(r1.account_name, r1.text))
     pass
 
     
@@ -77,5 +123,9 @@ if __name__ == "__main__":
                         help = 'text from mail or pdf depending on depot. e. g. consors_depot',
                         default = 'Consors_depot')
 
+    parser.add_argument('--filepath',
+                        help = 'mail in text file saved from outlook',
+                        default = r"I:\going_on\finance\consors\Consorsbank.txt")
+
     args = parser.parse_args()    
-    main(_text=args.input_text, _account_name = args.account_name)
+    main(_filepath = args.filepath)
