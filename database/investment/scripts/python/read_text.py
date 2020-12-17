@@ -85,12 +85,6 @@ class Read_text:
 
 def main(_filepath):   
     print('+++++++++++++++++++++++++\n')
-    r1 = Read_text()
-    r1.text_from_consors_email(_filepath)
-    dd = r1.dictionary_from_consors_email_text() 
-    r1.convert_dict_to_dataframe(dd)      
-
-    print(r1.df)
     # r1.text_from_account(_text,_account_name)
     # r1.extract_text_to_order()
     # #ret = r1.read_product.get_product_id_with_wkn('DBX1SM')
