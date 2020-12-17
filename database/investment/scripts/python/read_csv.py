@@ -19,7 +19,12 @@ class Read_csv:
                         "targo_tages"  ]
 
     def read_comdirect_depot(self):
-        df = pd.read_csv(self.filepath, encoding="ISO-8859-1", low_memory=False, sep=';', skiprows=1, nrows=7)   
+        try:
+            df = pd.read_csv(self.filepath, encoding="ISO-8859-1", low_memory=False, sep=';', skiprows=1, nrows=7)  
+            print('Opened file: {}'.format(self.filepath)) 
+        except FileNotFoundError as e:
+            print('file not found. or {}'.format(e.args))
+            return None
         df = df.drop(columns=['Notizen', 'Währung', 'Datum', 'Zeit', 'Börse', 'Unnamed: 17'])
         float_data = ['Stück/Nom.', 'Akt. Kurs', 'Diff. abs','Kaufkurs in EUR', 'Kaufwert in EUR']
         for i in float_data:
@@ -108,8 +113,8 @@ class Read_csv:
 def main(_filepath, _account, _json_path):
     o1 = Read_csv(_filepath)
     o1.read_account(_account)
-    o1.update_sheet_values_comdirect(_json_path)
-    #o1.update_sheet_values_consors(_json_path)
+    # o1.update_sheet_values_comdirect(_json_path)
+    o1.update_sheet_values_consors(_json_path)
     # o1.update_sheet_values(_json_path)
     pass
 
@@ -121,10 +126,12 @@ if __name__ == "__main__":
     
     parser.add_argument('--filepath',
                         help='input file and its folder together',
-                        default=r"C:\Users\saver\Downloads\depotuebersicht_9787270226_20201214-1801.csv")
+                        default=r"C:\Users\saver\Downloads\Depotübersicht_788267505 (4).csv")
+                        # default=r"C:\Users\saver\Downloads\depotuebersicht_9787270226_20201214-1801b.csv")
     parser.add_argument('--account',
                         help='input account name',
-                        default=r"comdirect_depot")
+                        default=r"Consors_depot")
+                        # default=r"comdirect_depot")
 
     parser.add_argument('--json_path',
                         help='input json file path',
