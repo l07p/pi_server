@@ -81,16 +81,21 @@ class Read_csv:
 
 
     def update_sheet_values(self, _json_path):
-        v1 = Google_sheets(_json_path)
-        dd = self._df.to_dict('records')
+        if self.account == 'comdirect_depot':
+            self.update_sheet_values_comdirect(_json_path)
+        else:
+            print('------no account is selected.')
+            pass
+        # v1 = Google_sheets(_json_path)
+        # dd = self._df.to_dict('records')
         
-        for i in dd:
-            if i['ISIN / WKN'] in v1.isin:
-                _stueck = i['Bestand']
-                _isin = i['ISIN / WKN']
-                _einstandskurs = i['Einstandskurs']
-                print('{1}  {0}  {2}'.format(_stueck, _isin, _einstandskurs))
-                v1.update_etf_cell(_isin, _stueck, _einstandskurs)
+        # for i in dd:
+        #     if i['ISIN / WKN'] in v1.isin:
+        #         _stueck = i['Bestand']
+        #         _isin = i['ISIN / WKN']
+        #         _einstandskurs = i['Einstandskurs']
+        #         print('{1}  {0}  {2}'.format(_stueck, _isin, _einstandskurs))
+        #         v1.update_etf_cell(_isin, _stueck, _einstandskurs)
         pass
 
     def read_account(self, _account):
@@ -114,8 +119,8 @@ def main(_filepath, _account, _json_path):
     o1 = Read_csv(_filepath)
     o1.read_account(_account)
     # o1.update_sheet_values_comdirect(_json_path)
-    o1.update_sheet_values_consors(_json_path)
-    # o1.update_sheet_values(_json_path)
+    # o1.update_sheet_values_consors(_json_path)
+    o1.update_sheet_values(_json_path)
     pass
 
 
@@ -126,12 +131,12 @@ if __name__ == "__main__":
     
     parser.add_argument('--filepath',
                         help='input file and its folder together',
-                        default=r"C:\Users\saver\Downloads\Depotübersicht_788267505 (4).csv")
-                        # default=r"C:\Users\saver\Downloads\depotuebersicht_9787270226_20201214-1801b.csv")
+                        # default=r"C:\Users\saver\Downloads\Depotübersicht_788267505 (4).csv")
+                        default=r"C:\Users\saver\Downloads\depotuebersicht_9787270226_20201217-1731.csv")
     parser.add_argument('--account',
                         help='input account name',
-                        default=r"Consors_depot")
-                        # default=r"comdirect_depot")
+                        # default=r"Consors_depot")
+                        default=r"comdirect_depot")
 
     parser.add_argument('--json_path',
                         help='input json file path',
