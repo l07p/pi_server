@@ -146,12 +146,6 @@ if __name__ == "__main__":
 
     parser.add_argument('--account',
                         help='input account name',
-                        # default=r"Consors_depot")
-                        # default=r"comdirect_depot")
-                        default=r"DKB_depot")
-
-    parser.add_argument('--account',
-                        help='input account name',
                         default=r"Consors_depot")
                         # default=r"comdirect_depot")
 
