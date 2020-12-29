@@ -57,6 +57,14 @@ class Google_sheets:
         wsheet.update(_pos,_stueck_value)
         _pos = 'G' + str(_row)
         wsheet.update(_pos,_einstandskurs_value)
+            
+    def update_etf_cell_wi_isin(self, _isin, _stueck_value,_einstandskurs_value):
+        wsheet = self.gsheet.worksheet('etf')
+        _row = self.isin.index(_isin)
+        _pos = 'F' + str(_row)
+        wsheet.update(_pos,_stueck_value)
+        _pos = 'G' + str(_row)
+        wsheet.update(_pos,_einstandskurs_value)
 
 def tests():
     # define the scope

@@ -7,7 +7,7 @@ from pdfminer.high_level import extract_text
 def main(infile):
     #print(infile.read())
     #infile.close()
-    text = extract_text("/home/project/Projects/pi_server/database/investment/scripts/test_dkb.pdf")
+    text = extract_text(r"/home/project/Projects/pi_server/database/investment/scripts/test_dkb.pdf")
     print(text)
 
 if __name__ == "__main__": 
