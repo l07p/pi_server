@@ -128,8 +128,6 @@ class Read_csv:
 def main(_filepath, _account, _json_path):
     o1 = Read_csv(_filepath)
     o1.read_account(_account)
-    # o1.update_sheet_values_comdirect(_json_path)
-    # o1.update_sheet_values_consors(_json_path)
     o1.update_sheet_values(_json_path)
     pass
 
@@ -142,6 +140,7 @@ if __name__ == "__main__":
     parser.add_argument('--filepath',
                         help='input file and its folder together',
                         # default=r"C:\Users\saver\Downloads\Depotübersicht_788267505 (4).csv")
+<<<<<<< HEAD
                         #default=r"C:\Users\saver\Downloads\depotuebersicht_9787270226_20201217-1731.csv")
                         default=r"C:\Users\saver\Downloads\502081722 (9).csv")
     parser.add_argument('--account',
@@ -149,10 +148,20 @@ if __name__ == "__main__":
                         # default=r"Consors_depot")
                         # default=r"comdirect_depot")
                         default=r"DKB_depot")
+=======
+                        # default=r"C:\Users\saver\Downloads\depotuebersicht_9787270226_20201217-1731.csv")
+                        default = r"/media/lnmycloud/archives/banks/consors/Depotübersicht_788267505 (5).csv")
+
+    parser.add_argument('--account',
+                        help='input account name',
+                        default=r"Consors_depot")
+                        # default=r"comdirect_depot")
+>>>>>>> 6b22fbee798d802a12d336e2af1422a1646901aa
 
     parser.add_argument('--json_path',
                         help='input json file path',
-                        default=r"C:\Users\saver\AppData\gspread\SheetsPython-ea71b57285ec.json")
+                        # default=r"C:\Users\saver\AppData\gspread\SheetsPython-ea71b57285ec.json")
+                        default=r"/media/lnmycloud/certificates/gspread/SheetsPython-ea71b57285ec.json")
 
     args = parser.parse_args()
 
