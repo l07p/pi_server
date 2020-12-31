@@ -1,0 +1,169 @@
+<mxfile host="65bd71144e" modified="2020-12-30T22:41:55.665Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.52.1 Chrome/83.0.4103.122 Electron/9.3.5 Safari/537.36" version="13.10.0" etag="Kq2FR3shwXY-_mbrVbQ6" type="embed">
+    <diagram id="4n6ECPaNXWi29JqTkvSf" name="account">
+        <mxGraphModel dx="862" dy="957" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="9" target="23" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="read date from file or text for update account balances" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#a0522d;strokeColor=#6D1F00;fontColor=#ffffff;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="40" width="190" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="account balances with dates" style="html=1;dashed=0;whitespace=wrap;shape=partialRectangle;right=0;fillColor=#008a00;strokeColor=#005700;fontColor=#ffffff;" parent="1" vertex="1">
+                    <mxGeometry x="440" y="340" width="190" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="15" target="21" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="multiple accounts in&lt;br&gt;the file or text" style="html=1;dashed=0;whitespace=wrap;shape=mxgraph.dfd.loop;fillColor=#f0a30a;strokeColor=#BD7000;fontColor=#ffffff;" parent="1" vertex="1">
+                    <mxGeometry x="65" y="230" width="195" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="29" value="update account balances" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="21" target="13" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" value="account_name&lt;br&gt;account_id&lt;br&gt;balance&lt;br&gt;date" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;dashed=0;fillColor=#0050ef;strokeColor=#001DBC;fontColor=#ffffff;" parent="1" vertex="1">
+                    <mxGeometry x="83.75" y="320" width="157.5" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="23" target="15" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="23" target="26" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="if list end" style="shape=rhombus;html=1;dashed=0;whitespace=wrap;perimeter=rhombusPerimeter;" parent="1" vertex="1">
+                    <mxGeometry x="260" y="140" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" value="Stop" style="shape=ellipse;html=1;dashed=0;whitespace=wrap;aspect=fixed;strokeWidth=5;perimeter=ellipsePerimeter;fillColor=#d80073;strokeColor=#A50040;fontColor=#ffffff;" parent="1" vertex="1">
+                    <mxGeometry x="490" y="50" width="60" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" value="Account" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#0050ef;strokeColor=#001DBC;fontColor=#ffffff;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="460" width="330" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="31" value="+ name: character" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="30" vertex="1">
+                    <mxGeometry y="26" width="330" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="34" value="+ number: character" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="30" vertex="1">
+                    <mxGeometry y="52" width="330" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="52" value="+ balance: account_balance" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="30" vertex="1">
+                    <mxGeometry y="78" width="330" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="30" vertex="1">
+                    <mxGeometry y="104" width="330" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="33" value="+ get_name(number): character" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="30" vertex="1">
+                    <mxGeometry y="112" width="330" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="61" value="+ get_account_id(name): integer" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="30" vertex="1">
+                    <mxGeometry y="138" width="330" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="70" value="+ read_account_balance(file or text): integer 0 ok, otherwise failed" style="text;strokeColor=#6D1F00;fillColor=#a0522d;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#ffffff;" parent="30" vertex="1">
+                    <mxGeometry y="164" width="330" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="37" value="" style="shape=table;html=1;whiteSpace=wrap;startSize=0;container=1;collapsible=0;childLayout=tableLayout;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=#ffffff;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="690" width="660" height="228" as="geometry"/>
+                </mxCell>
+                <mxCell id="38" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;top=0;left=0;bottom=0;right=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="37" vertex="1">
+                    <mxGeometry width="660" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="39" value="class" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;" parent="38" vertex="1">
+                    <mxGeometry width="60" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="40" value="method" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;" parent="38" vertex="1">
+                    <mxGeometry x="60" width="220" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="41" value="function" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;" parent="38" vertex="1">
+                    <mxGeometry x="280" width="380" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;top=0;left=0;bottom=0;right=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="37" vertex="1">
+                    <mxGeometry y="20" width="660" height="53" as="geometry"/>
+                </mxCell>
+                <mxCell id="43" value="Account" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;" parent="42" vertex="1">
+                    <mxGeometry width="60" height="53" as="geometry"/>
+                </mxCell>
+                <mxCell id="44" value="get_account_name(number)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;align=left;" parent="42" vertex="1">
+                    <mxGeometry x="60" width="220" height="53" as="geometry"/>
+                </mxCell>
+                <mxCell id="45" value="convert number to account name in database, set it to self.name A dictionary hard coded" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;align=left;" parent="42" vertex="1">
+                    <mxGeometry x="280" width="380" height="53" as="geometry"/>
+                </mxCell>
+                <mxCell id="46" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;top=0;left=0;bottom=0;right=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="37" vertex="1">
+                    <mxGeometry y="73" width="660" height="31" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" value="Account" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;" parent="46" vertex="1">
+                    <mxGeometry width="60" height="31" as="geometry"/>
+                </mxCell>
+                <mxCell id="48" value="get_account_id(name)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;align=left;" parent="46" vertex="1">
+                    <mxGeometry x="60" width="220" height="31" as="geometry"/>
+                </mxCell>
+                <mxCell id="49" value="return account id as in database" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;align=left;" parent="46" vertex="1">
+                    <mxGeometry x="280" width="380" height="31" as="geometry"/>
+                </mxCell>
+                <mxCell id="71" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;top=0;left=0;bottom=0;right=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="37" vertex="1">
+                    <mxGeometry y="104" width="660" height="31" as="geometry"/>
+                </mxCell>
+                <mxCell id="72" value="Account" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;" parent="71" vertex="1">
+                    <mxGeometry width="60" height="31" as="geometry"/>
+                </mxCell>
+                <mxCell id="73" value="read_account_balance(file or text)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=#a0522d;top=0;left=0;bottom=0;right=0;overflow=hidden;align=left;strokeColor=#6D1F00;fontColor=#ffffff;" parent="71" vertex="1">
+                    <mxGeometry x="60" width="220" height="31" as="geometry"/>
+                </mxCell>
+                <mxCell id="74" value="return ok or fault" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=#a0522d;top=0;left=0;bottom=0;right=0;overflow=hidden;align=left;strokeColor=#6D1F00;fontColor=#ffffff;" parent="71" vertex="1">
+                    <mxGeometry x="280" width="380" height="31" as="geometry"/>
+                </mxCell>
+                <mxCell id="62" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;top=0;left=0;bottom=0;right=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="37" vertex="1">
+                    <mxGeometry y="135" width="660" height="32" as="geometry"/>
+                </mxCell>
+                <mxCell id="63" value="Balance" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;" parent="62" vertex="1">
+                    <mxGeometry width="60" height="32" as="geometry"/>
+                </mxCell>
+                <mxCell id="64" value="get_last_balance_id(account_id)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;align=left;" parent="62" vertex="1">
+                    <mxGeometry x="60" width="220" height="32" as="geometry"/>
+                </mxCell>
+                <mxCell id="65" value="return lastest balance id of an account" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;align=left;" parent="62" vertex="1">
+                    <mxGeometry x="280" width="380" height="32" as="geometry"/>
+                </mxCell>
+                <mxCell id="66" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;top=0;left=0;bottom=0;right=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="37" vertex="1">
+                    <mxGeometry y="167" width="660" height="61" as="geometry"/>
+                </mxCell>
+                <mxCell id="67" value="Balance" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;" parent="66" vertex="1">
+                    <mxGeometry width="60" height="61" as="geometry"/>
+                </mxCell>
+                <mxCell id="68" value="insert_balance" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;align=left;" parent="66" vertex="1">
+                    <mxGeometry x="60" width="220" height="61" as="geometry"/>
+                </mxCell>
+                <mxCell id="69" value="parameters: date, value, account. insert dataset into database, table account_balances" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;align=left;" parent="66" vertex="1">
+                    <mxGeometry x="280" width="380" height="61" as="geometry"/>
+                </mxCell>
+                <mxCell id="53" value="Balance" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#008a00;strokeColor=#005700;fontColor=#ffffff;" parent="1" vertex="1">
+                    <mxGeometry x="480" y="460" width="330" height="164" as="geometry"/>
+                </mxCell>
+                <mxCell id="54" value="+ id: integer, used only while update" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="26" width="330" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="58" value="+ date: date" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="52" width="330" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="59" value="+ value: float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="78" width="330" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="55" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="104" width="330" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="56" value="+ get_last_balance_id(account_id): integer" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="112" width="330" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="60" value="+ insert_balance(date, value, account_id): integer of new id" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="138" width="330" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="75" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="59" target="52">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="340" y="470" as="sourcePoint"/>
+                        <mxPoint x="500" y="470" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
