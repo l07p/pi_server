@@ -1,0 +1,24 @@
+= Database design and implement +
+:toc: left
+
+This file describes database Investment, from tables to functions
+
+
+== Tables in the database +
+.Tables
+[width="30%"]
+|===================
+|Tables
+
+ |account_balances
+ |account_types
+ |accounts
+ |banks
+ |order_types
+ |orders
+ |product_categories
+ |product_values
+ |products
+ |profits
+
+|===================
