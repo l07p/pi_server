@@ -5,6 +5,7 @@ from google_sheets import Google_sheets
 class Read_csv:
     def __init__(self, _filepath):
         self.filepath = _filepath 
+        self.date = None
         self._df = None
         self.account = None
         self.accounts = ["Consors_depot",          
@@ -67,7 +68,7 @@ class Read_csv:
                 v1.update_etf_cell_wi_wkn(_wkn, _stueck, _einstandskurs)
         pass
 
-    def read_dkb_depot(self):      
+    def read_dkb_depot(self):           
         df = pd.read_csv(self.filepath, encoding="ISO-8859-1", low_memory=False, delimiter=';', skiprows=5,nrows=14)
         df.drop(df.columns[df.columns.str.contains('unnamed',case = False)],axis = 1, inplace = True) 
         df.drop(columns="Dev. Kurs")
