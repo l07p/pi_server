@@ -10,6 +10,7 @@ class Product:
     def __init__(self):
         self.id = 0
         self.wkn = ''
+        self.isin = ''
 
 
     def called(self):
@@ -38,10 +39,33 @@ class Product:
 
         return product_id
         
-    def insert_product(self, _wkn, _isin, _name, _google_symbol):
+    def get_product_id_with_isin(self, _isin):
+        """ get id with product wkn from products table """
+        sql = """SELECT public.get_product_id_with_isin(%s);"""
+        conn = None
+        product_id = None
+        try:
+            # connect to the PostgreSQL database
+            conn = psycopg2.connect("dbname='investment' user='pi' host='192.168.178.54' password='ueber500mal'")
+            cur = conn.cursor()
+            cur.execute(sql,(_isin,))
+
+            # get the generated id back
+            product_id = cur.fetchone()[0]
+            # close communication with the database
+            cur.close()
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
+        finally:
+            if conn is not None:
+                conn.close()
+
+        return product_id
+        
+    def insert_product(self, _wkn, _isin, _name, _google_symbol, _category_id):
         """ insert a new into the products table """
-        sql = """INSERT INTO products(wkn, isin, name, google_symbol)
-                VALUES(%s, %s, %s, %s) RETURNING id;"""
+        sql = """INSERT INTO products(wkn, isin, name, google_symbol, category_id)
+                VALUES(%s, %s, %s, %s, %s) RETURNING id;"""
         conn = None
         product_id = None
         try:
@@ -50,7 +74,7 @@ class Product:
             # create a new cursor
             cur = conn.cursor()
             # execute the INSERT statement
-            cur.execute(sql, (_wkn, _isin, _name, _google_symbol))
+            cur.execute(sql, (_wkn, _isin, _name, _google_symbol, _category_id))
             # get the generated id back
             product_id = cur.fetchone()[0]
             # commit the changes to the database
@@ -141,7 +165,10 @@ class Product:
 def main(_wkn, _isin, _name, _google_symbol):
 
     p = Product()
-    ret = p.get_product_id_with_wkn('DBX1SM')
+    # p.insert_product('', '', '', '', 4) # (_wkn, _isin, _name, _google_symbol, _category_id)
+    p.insert_product('HVB43V', 'DE000HVB43V0', 'UC-HVB EXP.PL26 SX5E', '', 4) # (_wkn, _isin, _name, _google_symbol, _category_id)
+    # p.insert_product('PZ9RB4', 'DE000PZ9RB41', '5Y Memory Express Airbag Zertifikat auf Wirecard', '', 4)
+    # ret = p.get_product_id_with_wkn('DBX1SM')
     #ret = p.list_all_products_orders()
     #ret = p.list_orders(_name)
 
