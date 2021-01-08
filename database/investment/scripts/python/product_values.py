@@ -15,7 +15,7 @@ class Product_values:
         # Account DKB_depot
         if _account == 'DKB_depot':
             pattern = re.compile(r'Bestand per:...([0-9][0-9].[0-9][0-9].[0-9][0-9][0-9][0-9])(.....*)')
-            with open(self.csv.filepath, 'r') as f:
+            with open(self.csv.filepath, 'r', encoding='ISO-8859-1', errors='strict') as f:
                 contents = f.read()
                 vars = re.finditer(pattern, contents)
         else:
@@ -55,8 +55,9 @@ if __name__ == "__main__":
                         help='input file and its folder together',
                         # default=r"C:\Users\saver\Downloads\Depotübersicht_788267505 (4).csv")
                         #default=r"C:\Users\saver\Downloads\depotuebersicht_9787270226_20201217-1731.csv")
-                        default=r"C:\Users\saver\Downloads\502081722 (9).csv")
+                        #default=r"C:\Users\saver\Downloads\502081722 (9).csv")
                         #default=r"/media/lnmycloud/archives/banks/consors/Depotübersicht_788267505 (5).csv")
+                        default=r"/media/lnmycloud/archives/banks/dkb/502081722 (10).csv")
 
     parser.add_argument('--account',
                         help='input account name',
