@@ -35,9 +35,9 @@ class Product_values:
 
 
 def main(_filepath, _account):
-    # o1 = Product_values(_filepath)
+    o1 = Product_values(_filepath)
     # o1.read_date_str(_account)
-    # o1.csv.read_account(_account)
+    o1.csv.read_account(_account)
     # print(o1.date_str)
     # print(o1.csv._df)
     # print(Product().get_product_id_with_isin('DE000628930'))
@@ -56,15 +56,15 @@ if __name__ == "__main__":
     parser.add_argument('--filepath',
                         help='input file and its folder together',
                         # default=r"C:\Users\saver\Downloads\Depotübersicht_788267505 (4).csv")
-                        #default=r"C:\Users\saver\Downloads\depotuebersicht_9787270226_20201217-1731.csv")
-                        default=r"C:\Users\saver\Downloads\502081722 (9).csv")
+                        default=r"C:\Users\saver\Downloads\depotuebersicht_9787270226_20201217-1731.csv")
+                        # default=r"C:\Users\saver\Downloads\502081722 (9).csv")
                         # default=r"/media/lnmycloud/archives/banks/consors/Depotübersicht_788267505 (5).csv")
                         #default=r"/media/lnmycloud/archives/banks/dkb/502081722 (10).csv")
 
     parser.add_argument('--account',
                         help='input account name',
-                        default=r"DKB_depot")
-                        # default=r"comdirect_depot")
+                        # default=r"DKB_depot")
+                        default=r"comdirect_depot")
 
     args = parser.parse_args()
 

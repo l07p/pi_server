@@ -2,10 +2,13 @@ import pandas as pd
 from collections import OrderedDict, defaultdict
 from google_sheets import Google_sheets
 
+import re
+import datetime
+
 class Read_csv:
     def __init__(self, _filepath):
         self.filepath = _filepath 
-        self.date = None
+        self.date_str = '1970-07-01'
         self._df = None
         self.account = None
         self.accounts = ["Consors_depot",          
@@ -20,14 +23,23 @@ class Read_csv:
                         "targo_tages"  ]
 
     def read_comdirect_depot(self):
+        ret = None
         try:
+            pattern = re.compile(r'Datum:...*([0-9][0-9].[0-9][0-9].[0-9][0-9][0-9][0-9])(.....*)')
+            with open(self.filepath, 'r', encoding='ISO-8859-1', errors='strict') as f:
+                contents = f.read()
+                vars = re.findall(pattern, contents)
+                ret = vars[0][0]
+        
+                self.date_str = datetime.datetime.strptime(ret, '%d.%m.%Y').strftime('%Y-%m-%d')
+
             df = pd.read_csv(self.filepath, encoding="ISO-8859-1", low_memory=False, sep=';', skiprows=1, nrows=7)  
             print('Opened file: {}'.format(self.filepath)) 
         except FileNotFoundError as e:
             print('file not found. or {}'.format(e.args))
             return None
         df = df.drop(columns=['Notizen', 'Währung', 'Datum', 'Zeit', 'Börse', 'Unnamed: 17'])
-        float_data = ['Stück/Nom.', 'Akt. Kurs', 'Diff. abs','Kaufkurs in EUR', 'Kaufwert in EUR']
+        float_data = ['Stück/Nom.', 'Akt. Kurs', 'Diff. abs','Kaufkurs in EUR', 'Kaufwert in EUR', 'Wert in EUR']
         for i in float_data:
             df[i] = df[i].str.replace('.', '')
             df[i] = df[i].str.replace(',', '.').astype(float)
