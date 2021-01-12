@@ -10,6 +10,10 @@ class Read_csv:
         self.filepath = _filepath 
         self.date_str = '1970-07-01'
         self._df = None
+        self.range_lines = 0
+        self.dict = None
+        self.wkn = None
+        self.isin = None
         self.account = None
         self.accounts = ["Consors_depot",          
                         "DKB_depot",              
@@ -32,8 +36,10 @@ class Read_csv:
                 ret = vars[0][0]
         
                 self.date_str = datetime.datetime.strptime(ret, '%d.%m.%Y').strftime('%Y-%m-%d')
+                self.range_lines = len(contents.splitlines()) - 16
 
-            df = pd.read_csv(self.filepath, encoding="ISO-8859-1", low_memory=False, sep=';', skiprows=1, nrows=7)  
+
+            df = pd.read_csv(self.filepath, encoding="ISO-8859-1", low_memory=False, sep=';', skiprows=1, nrows=self.range_lines)  
             print('Opened file: {}'.format(self.filepath)) 
         except FileNotFoundError as e:
             print('file not found. or {}'.format(e.args))
@@ -44,6 +50,7 @@ class Read_csv:
             df[i] = df[i].str.replace('.', '')
             df[i] = df[i].str.replace(',', '.').astype(float)
         self._df = df
+        self.dict = self._df.to_dict('records')
         
     def update_sheet_values_comdirect(self, _json_path):
         v1 = Google_sheets(_json_path)
@@ -80,7 +87,19 @@ class Read_csv:
                 v1.update_etf_cell_wi_wkn(_wkn, _stueck, _einstandskurs)
         pass
 
-    def read_dkb_depot(self):           
+    def read_dkb_depot(self):        
+        ret = None
+
+        pattern = re.compile(r'Bestand per:...([0-9][0-9].[0-9][0-9].[0-9][0-9][0-9][0-9])(.....*)')
+        with open(self.filepath, 'r', encoding='ISO-8859-1', errors='strict') as f:
+            contents = f.read()
+            vars = re.finditer(pattern, contents)
+
+        for var in vars:
+            ret = var.group(1)
+        
+        self.date_str = datetime.datetime.strptime(ret, '%d.%m.%Y').strftime('%Y-%m-%d')
+
         df = pd.read_csv(self.filepath, encoding="ISO-8859-1", low_memory=False, delimiter=';', skiprows=5,nrows=14)
         df.drop(df.columns[df.columns.str.contains('unnamed',case = False)],axis = 1, inplace = True) 
         df.drop(columns="Dev. Kurs")
@@ -91,6 +110,7 @@ class Read_csv:
 
         df['Einstandskurs'] = df['Einstandswert'] / df['Bestand']
         self._df = df
+        self.dict = self._df.to_dict('records')
 
     def update_sheet_values_dkb(self, _json_path):
         v1 = Google_sheets(_json_path)
@@ -153,7 +173,7 @@ if __name__ == "__main__":
     parser.add_argument('--filepath',
                         help='input file and its folder together',
                         # default=r"C:\Users\saver\Downloads\Depotübersicht_788267505 (4).csv")
-                        #default=r"C:\Users\saver\Downloads\depotuebersicht_9787270226_20201217-1731.csv")
+                        # default=r"C:\Users\saver\Downloads\depotuebersicht_9787270226_20210112-1028.csv")
                         #default=r"C:\Users\saver\Downloads\502081722 (9).csv")
                         default=r"/media/lnmycloud/archives/banks/consors/Depotübersicht_788267505 (5).csv")
 

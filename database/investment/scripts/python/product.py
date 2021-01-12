@@ -5,6 +5,7 @@ import psycopg2
 import psycopg2.extras
 import pandas as pd
 import sys
+import access_database
 
 class Product:
     def __init__(self):
@@ -15,6 +16,9 @@ class Product:
 
     def called(self):
         print('++++++ product created')
+
+    def get_id_from(self, _func, _param): # """SELECT public.get_product_id_with_isin('DE000A0H08M3');""" or """SELECT public.get_product_id_with_wkn('{}');""", 'A0H08M'
+        self.id = access_database.get_id_from(_func, _param)
 
     def get_product_id_with_wkn(self, _wkn):
         """ get id with product wkn from products table """
