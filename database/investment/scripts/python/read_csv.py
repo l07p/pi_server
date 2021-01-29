@@ -112,6 +112,25 @@ class Read_csv:
         self._df = df
         self.dict = self._df.to_dict('records')
 
+    def read_dkb_giro(self):        
+        with open(self.filepath, 'r', encoding='ISO-8859-1', errors='strict') as f:
+            contents = f.read()
+
+            self.range_lines = len(contents.splitlines())
+
+
+        df = pd.read_csv(self.filepath, encoding="ISO-8859-1", low_memory=False, delimiter=';', skiprows=6,nrows=self.range_lines)
+        df.drop(df.columns[df.columns.str.contains('Unnamed',case = False)],axis = 1, inplace = True) 
+        df.drop(columns=['Buchungstag', 'BLZ', 'Gläubiger-ID', 'Mandatsreferenz', 'Kundenreferenz'], axis = 1, inplace=True)
+        float_data = ['Betrag (EUR)']
+        for i in float_data:
+            df[i] = df[i].str.replace('.', '')
+            df[i] = df[i].str.replace(',', '.').astype(float)
+
+        # df['Einstandskurs'] = df['Einstandswert'] / df['Bestand']
+        self._df = df
+        self.dict = self._df.to_dict('records')
+
     def update_sheet_values_dkb(self, _json_path):
         v1 = Google_sheets(_json_path)
         dd = self._df.to_dict('records')
@@ -141,7 +160,20 @@ class Read_csv:
             pass
         pass
 
-    def read_account(self, _account):
+    def read_giro(self, _account):
+        if _account in self.accounts:
+            self.account = _account
+
+        if _account == 'DKB_giro':
+            self.read_dkb_giro()
+        # elif _account == 'Consors_depot':
+        #     self.read_consors_depot()
+        # elif _account == 'comdirect_depot':
+        #     self.read_comdirect_depot()
+        else:
+            pass
+
+    def read_depot(self, _account):
         if _account in self.accounts:
             self.account = _account
         if _account == 'DKB_depot':
@@ -160,7 +192,7 @@ class Read_csv:
 
 def main(_filepath, _account, _json_path):
     o1 = Read_csv(_filepath)
-    o1.read_account(_account)
+    o1.read_depot(_account)
     o1.update_sheet_values(_json_path)
     pass
 

@@ -2,21 +2,56 @@ import argparse
 import re
 import sys
 
-from pdfminer.high_level import extract_text
+import os
+from tabula import Wrapper
+
+# from pdfminer.high_level import extract_text
+# from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
+# from pdfminer.converter import TextConverter, XMLConverter, HTMLConverter
+# from pdfminer.layout import LAParams
+# from pdfminer.pdfpage import PDFPage
+# from io import BytesIO
+
+# def convert_pdf(path, format='text', codec='utf-8', password=''):
+#     rsrcmgr = PDFResourceManager()
+#     retstr = BytesIO()
+#     laparams = LAParams()
+#     if format == 'text':
+#         device = TextConverter(rsrcmgr, retstr, codec=codec, laparams=laparams)
+#     elif format == 'html':
+#         device = HTMLConverter(rsrcmgr, retstr, codec=codec, laparams=laparams)
+#     elif format == 'xml':
+#         device = XMLConverter(rsrcmgr, retstr, codec=codec, laparams=laparams)
+#     else:
+#         raise ValueError('provide format, either text, html or xml!')
+#     fp = open(path, 'rb')
+#     interpreter = PDFPageInterpreter(rsrcmgr, device)
+#     maxpages = 0
+#     caching = True
+#     pagenos=set()
+#     for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages, password=password,caching=caching, check_extractable=True):
+#         interpreter.process_page(page)
+
+#     text = retstr.getvalue().decode()
+#     fp.close()
+#     device.close()
+#     retstr.close()
+#     return text
 
 def main(infile):
-    #print(infile.read())
-    #infile.close()
-    text = extract_text(r"/home/project/Projects/pi_server/database/investment/scripts/test_dkb.pdf")
-    print(text)
+    print('============= no idea =================')
+    tables = Wrapper.read_pdf(infile,multiple_tables=True,pages='all')
+
+    for table in tables:
+        print('any')
+
+    pass
 
 if __name__ == "__main__": 
     parser = argparse.ArgumentParser(
         prog='Read_pdf', 
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        description='''\
-        ++This function 
-            read pdf file and extract text.''')
+        description='''   ++This function  read pdf file and extract text.''')
     parser.print_help()
 
     # parser.add_argument('--infile', nargs='?', type=argparse.FileType('r'),
@@ -24,8 +59,9 @@ if __name__ == "__main__":
       #                  help='input')
 
     parser.add_argument('--infile', 
-                        default="test_dkb.pdf",
-                            help='input')
+                        # default=r"/home/project/Projects/pi_server/database/investment/scripts/test_dkb.pdf",
+                        default=r"I:\going_on\finance\DKB\DKB -20210114tecdax_verkauf.pdf",
+                        help='input')
 
     args = parser.parse_args()
     main(args.infile)

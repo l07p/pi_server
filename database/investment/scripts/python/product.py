@@ -13,6 +13,8 @@ class Product:
         self.wkn = ''
         self.isin = ''
 
+    def list_products_names(self):
+        pass
 
     def called(self):
         print('++++++ product created')
