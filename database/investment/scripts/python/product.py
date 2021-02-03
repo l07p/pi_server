@@ -12,8 +12,10 @@ class Product:
         self.id = 0
         self.wkn = ''
         self.isin = ''
+        self.all_in_database = None
 
-    def list_products_names(self):
+    def get_all_products(self):
+        self.all_in_database = access_database.get_a_table((['id','name','wkn', 'isin', 'google_symbol', 'category_id']), 'products')
         pass
 
     def called(self):
@@ -171,8 +173,10 @@ class Product:
 def main(_wkn, _isin, _name, _google_symbol):
 
     p = Product()
+    p.get_all_products()
+    print(p.all_in_database)
     # p.insert_product('', '', '', '', 4) # (_wkn, _isin, _name, _google_symbol, _category_id)
-    p.insert_product('HVB45T', 'DE000HVB45T9', 'UC-HVB EXP.PL26 SX5E', '', 4) # (_wkn, _isin, _name, _google_symbol, _category_id)
+    # p.insert_product('HVB45T', 'DE000HVB45T9', 'UC-HVB EXP.PL26 SX5E', '', 4) # (_wkn, _isin, _name, _google_symbol, _category_id)
     # p.insert_product('HVB43V', 'DE000HVB43V0', 'UC-HVB EXP.PL26 SX5E', '', 4) # (_wkn, _isin, _name, _google_symbol, _category_id)
     # p.insert_product('PZ9RB4', 'DE000PZ9RB41', '5Y Memory Express Airbag Zertifikat auf Wirecard', '', 4)
     # ret = p.get_product_id_with_wkn('DBX1SM')

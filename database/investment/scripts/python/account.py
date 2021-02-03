@@ -5,7 +5,9 @@ import access_database
 # This is class of account
 class Account:
     def __init__(self, _filepath, _account):
+        self.names =  access_database.get_column_in_table('name', 'accounts')
         self.name = _account
+        self.id = access_database.get_id_where_column('accounts', 'name', _account)
         self.csv = Read_csv(_filepath)
         pass
 
@@ -21,9 +23,10 @@ class Account:
 
 def main(_filepath, _account):
     o1 = Account(_filepath, _account)
+    print(o1.id)
     # o1.csv.read_giro(_account)
     # print(o1.csv._df)
-    o1.find_product_with_filter_df()
+    # o1.find_product_with_filter_df()
     pass
 
 
