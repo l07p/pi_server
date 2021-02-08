@@ -8,7 +8,7 @@ Azul Systems provides tested, certified builds of OpenJDK, under the name of Zul
     1. [Sub paragraph](#subparagraph1)
 3. [Another paragraph](#paragraph2)
 
-## Some paragraph <a name="paragraph1"></a>
+## Download / install Zulu OpenJDK 17, 16, 15, 13, 11, 8 or 7 in Ubuntu, Debian, Linux Mint, RHEL, etc.
 The first paragraph text
 
 ### Sub paragraph <a name="subparagraph1"></a>
