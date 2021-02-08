@@ -20,7 +20,10 @@ class Google_sheets:
             'FR0007056841',
             'DE0005933972',
             'IE00B53SZB19',
-            'LU0274221281'
+            'LU0274221281',
+            'LU0274221281B',
+            'IE00BJ0KDR00',
+            'IE00B9CQXS71'
             ]
         self.wkn = [
             'aaaaaa',
@@ -35,7 +38,9 @@ class Google_sheets:
             '593397',
             'A0YEDL',
             'DBX1SM0',
-            'DBX1SM'
+            'DBX1SM',
+            'A1XB5V',
+            'A1T8GD'
         ]
 
     def get_wsheet(self, _wsheet):

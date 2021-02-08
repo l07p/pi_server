@@ -15,16 +15,25 @@ class Read_csv:
         self.wkn = None
         self.isin = None
         self.account = None
-        self.accounts = ["Consors_depot",          
-                        "DKB_depot",              
-                        "DKB_giro",               
-                        "DKB_tages",              
-                        "Targo_depot",            
-                        "comdirect_depot",        
-                        "targo_fest",             
-                        "targo_giro",             
-                        "targo_hoch_zins",        
-                        "targo_tages"  ]
+        self.accounts = ["DKB_depot",
+                        "comdirect_depot",
+                        "targo_giro",
+                        "targo_tages",
+                        "targo_fest",
+                        "targo_hoch_zins",
+                        "DKB_giro",
+                        "DKB_tages",
+                        "equateplus",
+                        "comdirect_verrechnung",
+                        "comdirect_giro",
+                        "consors_giro",
+                        "consors_fest",
+                        "consors_verrechnung",
+                        "consors_tages",
+                        "targo_depot",
+                        "consors_depot",
+                        "ikb_usd" ]
+                        
 
     def read_comdirect_depot(self):
         ret = None
