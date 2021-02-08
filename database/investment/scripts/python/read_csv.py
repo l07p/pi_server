@@ -5,6 +5,20 @@ from google_sheets import Google_sheets
 import re
 import datetime
 
+##########################################################
+## a function to convert , to . then string to float with .
+##########################################################
+def convert_decimal_from_comm_to_point(_df, _columns):
+    try:
+        for i in _columns:
+            _df[i] = _df[i].str.replace('%', '')            
+            _df[i] = _df[i].str.replace('.', '')
+            _df[i] = _df[i].str.replace(',', '.').astype(float)
+    except:
+        print('no convert, maybe already decimal/float.')
+        return _df
+    return _df
+
 class Read_csv:
     def __init__(self, _filepath):
         self.filepath = _filepath 
@@ -53,12 +67,11 @@ class Read_csv:
         except FileNotFoundError as e:
             print('file not found. or {}'.format(e.args))
             return None
-        df = df.drop(columns=['Notizen', 'Währung', 'Datum', 'Zeit', 'Börse', 'Unnamed: 17'])
+        df = df.drop(columns=['Notizen', 'Währung', 'Datum', 'Zeit', 'Börse', 'Diff. %', 'Diff. %.1', 'Unnamed: 17'])
+
         float_data = ['Stück/Nom.', 'Akt. Kurs', 'Diff. abs','Kaufkurs in EUR', 'Kaufwert in EUR', 'Wert in EUR']
-        for i in float_data:
-            df[i] = df[i].str.replace('.', '')
-            df[i] = df[i].str.replace(',', '.').astype(float)
-        self._df = df
+        self._df = convert_decimal_from_comm_to_point(df, float_data) # convert , to . then float decimal with .
+
         self.dict = self._df.to_dict('records')
         
     def update_sheet_values_comdirect(self, _json_path):
@@ -213,20 +226,20 @@ if __name__ == "__main__":
     
     parser.add_argument('--filepath',
                         help='input file and its folder together',
-                        # default=r"C:\Users\saver\Downloads\Depotübersicht_788267505 (4).csv")
+                        default=r"C:\Users\saver\Downloads\depotuebersicht_9787270226_20210208-1525.csv")
                         # default=r"C:\Users\saver\Downloads\depotuebersicht_9787270226_20210112-1028.csv")
-                        #default=r"C:\Users\saver\Downloads\502081722 (9).csv")
-                        default=r"/media/lnmycloud/archives/banks/consors/Depotübersicht_788267505 (5).csv")
+                        # default=r"C:\Users\saver\Downloads\502081722 (9).csv")
+                        # default=r"/media/lnmycloud/archives/banks/consors/Depotübersicht_788267505 (5).csv")
 
     parser.add_argument('--account',
                         help='input account name',
-                        default=r"Consors_depot")
-                        # default=r"comdirect_depot")
+                        # default=r"Consors_depot")
+                        default=r"comdirect_depot")
 
     parser.add_argument('--json_path',
                         help='input json file path',
-                        # default=r"C:\Users\saver\AppData\gspread\SheetsPython-ea71b57285ec.json")
-                        default=r"/media/lnmycloud/certificates/gspread/SheetsPython-ea71b57285ec.json")
+                        default=r"C:\Users\saver\AppData\gspread\SheetsPython-ea71b57285ec.json")
+                        # default=r"/media/lnmycloud/certificates/gspread/SheetsPython-ea71b57285ec.json")
 
     args = parser.parse_args()
 
