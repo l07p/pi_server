@@ -238,8 +238,8 @@ if __name__ == "__main__":
 
     parser.add_argument('--json_path',
                         help='input json file path',
-                        default=r"C:\Users\saver\AppData\gspread\SheetsPython-ea71b57285ec.json")
-                        # default=r"/media/lnmycloud/certificates/gspread/SheetsPython-ea71b57285ec.json")
+                        # default=r"C:\Users\saver\AppData\gspread\SheetsPython-ea71b57285ec.json")
+                        default=r"/media/lnmycloud/certificates/gspread/SheetsPython-ea71b57285ec.json")
 
     args = parser.parse_args()
 
