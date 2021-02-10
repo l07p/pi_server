@@ -17,5 +17,7 @@ restart service | sudo systemctl restart postgresql
 ![diagram](pg_hba_conf.png)
 
 ## Backup
+
+backup management | -
 -----------|------------
 backup folder | media/backup
