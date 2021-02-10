@@ -18,6 +18,7 @@ restart service | sudo systemctl restart postgresql
 
 ## Backup
 
-backup management | -
+backup management | - 
 -----------|------------
 backup folder | media/backup
+command | sudo pg_dump -U USERNAME -h REMOTE_HOST -p REMOTE_PORT NAME_OF_DB > LOCATION_AND_NAME_OF_BACKUP_FILE
