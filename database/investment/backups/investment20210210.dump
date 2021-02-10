@@ -1,0 +1,1418 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 12.5 (Ubuntu 12.5-0ubuntu0.20.04.1)
+-- Dumped by pg_dump version 12.5 (Ubuntu 12.5-0ubuntu0.20.04.1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: adminpack; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS adminpack WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION adminpack; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION adminpack IS 'administrative functions for PostgreSQL';
+
+
+--
+-- Name: get_product_id_with_isin(character varying); Type: FUNCTION; Schema: public; Owner: pi
+--
+
+CREATE FUNCTION public.get_product_id_with_isin(p_isin character varying, OUT p_id integer) RETURNS integer
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+SELECT id FROM products WHERE isin = p_isin INTO p_id;
+
+END;
+$$;
+
+
+ALTER FUNCTION public.get_product_id_with_isin(p_isin character varying, OUT p_id integer) OWNER TO pi;
+
+--
+-- Name: FUNCTION get_product_id_with_isin(p_isin character varying, OUT p_id integer); Type: COMMENT; Schema: public; Owner: pi
+--
+
+COMMENT ON FUNCTION public.get_product_id_with_isin(p_isin character varying, OUT p_id integer) IS 'as function name';
+
+
+--
+-- Name: get_product_id_with_wkn(text); Type: FUNCTION; Schema: public; Owner: pi
+--
+
+CREATE FUNCTION public.get_product_id_with_wkn(p_wkn text, OUT p_id integer) RETURNS integer
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+SELECT id FROM products WHERE wkn = p_wkn INTO p_id;
+
+END;
+$$;
+
+
+ALTER FUNCTION public.get_product_id_with_wkn(p_wkn text, OUT p_id integer) OWNER TO pi;
+
+--
+-- Name: FUNCTION get_product_id_with_wkn(p_wkn text, OUT p_id integer); Type: COMMENT; Schema: public; Owner: pi
+--
+
+COMMENT ON FUNCTION public.get_product_id_with_wkn(p_wkn text, OUT p_id integer) IS 'return product id with input wkn';
+
+
+--
+-- Name: update_date_of_balance(integer, character varying, double precision, integer); Type: FUNCTION; Schema: public; Owner: pi
+--
+
+CREATE FUNCTION public.update_date_of_balance(p_id integer DEFAULT 1, p_date character varying DEFAULT '1997-7-1'::character varying, p_balance double precision DEFAULT 1.0, p_account_id integer DEFAULT 1) RETURNS integer
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+	v_date timestamp;
+BEGIN
+	SELECT TO_DATE(p_date, 'YYYY-MM-DD') INTO v_date;
+	
+	if p_id > 0 then
+		UPDATE public.account_balances
+		SET date=v_date, balance=p_balance, account_id=p_account_id
+		WHERE id=p_id;
+	else
+		INSERT INTO account_balances(date,balance,account_id)
+		VALUES (v_date, p_balance, p_account_id);
+	end if;
+	
+	RETURN p_id;
+END;
+$$;
+
+
+ALTER FUNCTION public.update_date_of_balance(p_id integer, p_date character varying, p_balance double precision, p_account_id integer) OWNER TO pi;
+
+--
+-- Name: FUNCTION update_date_of_balance(p_id integer, p_date character varying, p_balance double precision, p_account_id integer); Type: COMMENT; Schema: public; Owner: pi
+--
+
+COMMENT ON FUNCTION public.update_date_of_balance(p_id integer, p_date character varying, p_balance double precision, p_account_id integer) IS 'test parameter of string to update it as date(timestamp). return id of updated dateset';
+
+
+--
+-- Name: update_product_value(integer, character varying, double precision, double precision, double precision, integer, integer); Type: FUNCTION; Schema: public; Owner: pi
+--
+
+CREATE FUNCTION public.update_product_value(p_id integer, p_date character varying, p_stueck double precision, p_einstandskurs double precision, p_kurs double precision, p_account_id integer, p_product_id integer) RETURNS integer
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+	v_date timestamp;
+BEGIN
+	SELECT TO_DATE(p_date, 'YYYY-MM-DD') INTO v_date;
+	
+	if p_id > 0 then
+		UPDATE public.product_values
+		SET date=v_date, stueck=p_stueck, einstandskurs=p_einstandskurs, kurs=p_kurs, account_id=p_account_id, product_id=p_product_id
+		WHERE id=p_id;
+	else
+		INSERT INTO product_values(date,stueck,einstandskurs, kurs, account_id,product_id)
+		VALUES (v_date, p_stueck, p_einstandskurs, p_kurs, p_account_id, p_product_id);
+		
+		SELECT MAX(id) FROM product_values INTO p_id;
+	end if;
+	
+	RETURN p_id;
+END;
+$$;
+
+
+ALTER FUNCTION public.update_product_value(p_id integer, p_date character varying, p_stueck double precision, p_einstandskurs double precision, p_kurs double precision, p_account_id integer, p_product_id integer) OWNER TO pi;
+
+--
+-- Name: FUNCTION update_product_value(p_id integer, p_date character varying, p_stueck double precision, p_einstandskurs double precision, p_kurs double precision, p_account_id integer, p_product_id integer); Type: COMMENT; Schema: public; Owner: pi
+--
+
+COMMENT ON FUNCTION public.update_product_value(p_id integer, p_date character varying, p_stueck double precision, p_einstandskurs double precision, p_kurs double precision, p_account_id integer, p_product_id integer) IS 'input date and other values';
+
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: account_balances; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.account_balances (
+    id integer NOT NULL,
+    date timestamp with time zone NOT NULL,
+    balance double precision NOT NULL,
+    account_id integer NOT NULL
+);
+
+
+ALTER TABLE public.account_balances OWNER TO pi;
+
+--
+-- Name: TABLE account_balances; Type: COMMENT; Schema: public; Owner: pi
+--
+
+COMMENT ON TABLE public.account_balances IS 'balance history on course of time';
+
+
+--
+-- Name: account_balances_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.account_balances_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.account_balances_id_seq OWNER TO pi;
+
+--
+-- Name: account_balances_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.account_balances_id_seq OWNED BY public.account_balances.id;
+
+
+--
+-- Name: account_types; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.account_types (
+    id integer NOT NULL,
+    type character varying NOT NULL
+);
+
+
+ALTER TABLE public.account_types OWNER TO pi;
+
+--
+-- Name: account_types_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.account_types_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.account_types_id_seq OWNER TO pi;
+
+--
+-- Name: account_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.account_types_id_seq OWNED BY public.account_types.id;
+
+
+--
+-- Name: accounts; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.accounts (
+    id integer NOT NULL,
+    name character varying NOT NULL,
+    type_id integer NOT NULL,
+    bank_id integer
+);
+
+
+ALTER TABLE public.accounts OWNER TO pi;
+
+--
+-- Name: COLUMN accounts.type_id; Type: COMMENT; Schema: public; Owner: pi
+--
+
+COMMENT ON COLUMN public.accounts.type_id IS 'account of save, depot or giro';
+
+
+--
+-- Name: accounts_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.accounts_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.accounts_id_seq OWNER TO pi;
+
+--
+-- Name: accounts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.accounts_id_seq OWNED BY public.accounts.id;
+
+
+--
+-- Name: banks; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.banks (
+    id integer NOT NULL,
+    name character varying NOT NULL,
+    link character varying,
+    operation character varying
+);
+
+
+ALTER TABLE public.banks OWNER TO pi;
+
+--
+-- Name: banks_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.banks_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.banks_id_seq OWNER TO pi;
+
+--
+-- Name: banks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.banks_id_seq OWNED BY public.banks.id;
+
+
+--
+-- Name: order_types; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.order_types (
+    id integer NOT NULL,
+    type character varying NOT NULL
+);
+
+
+ALTER TABLE public.order_types OWNER TO pi;
+
+--
+-- Name: TABLE order_types; Type: COMMENT; Schema: public; Owner: pi
+--
+
+COMMENT ON TABLE public.order_types IS 'ETF, Convertible bonds and so on';
+
+
+--
+-- Name: order_types_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.order_types_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.order_types_id_seq OWNER TO pi;
+
+--
+-- Name: order_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.order_types_id_seq OWNED BY public.order_types.id;
+
+
+--
+-- Name: orders; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.orders (
+    id integer NOT NULL,
+    kurs double precision NOT NULL,
+    stueck double precision NOT NULL,
+    provision double precision,
+    type_id integer,
+    product_id integer,
+    account_id integer,
+    date timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.orders OWNER TO pi;
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.orders_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.orders_id_seq OWNER TO pi;
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.orders_id_seq OWNED BY public.orders.id;
+
+
+--
+-- Name: product_categories; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.product_categories (
+    id integer NOT NULL,
+    category character varying NOT NULL,
+    parent_category character varying
+);
+
+
+ALTER TABLE public.product_categories OWNER TO pi;
+
+--
+-- Name: TABLE product_categories; Type: COMMENT; Schema: public; Owner: pi
+--
+
+COMMENT ON TABLE public.product_categories IS 'Index
+  ETF
+
+Zertifikate
+  Express
+  Bonus';
+
+
+--
+-- Name: product_categories_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.product_categories_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.product_categories_id_seq OWNER TO pi;
+
+--
+-- Name: product_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.product_categories_id_seq OWNED BY public.product_categories.id;
+
+
+--
+-- Name: product_values; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.product_values (
+    id integer NOT NULL,
+    date timestamp with time zone NOT NULL,
+    stueck double precision NOT NULL,
+    einstandskurs double precision NOT NULL,
+    account_id integer NOT NULL,
+    product_id integer NOT NULL,
+    kurs double precision
+);
+
+
+ALTER TABLE public.product_values OWNER TO pi;
+
+--
+-- Name: TABLE product_values; Type: COMMENT; Schema: public; Owner: pi
+--
+
+COMMENT ON TABLE public.product_values IS 'In the course of depots';
+
+
+--
+-- Name: product_values_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.product_values_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.product_values_id_seq OWNER TO pi;
+
+--
+-- Name: product_values_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.product_values_id_seq OWNED BY public.product_values.id;
+
+
+--
+-- Name: products; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.products (
+    id integer NOT NULL,
+    name character varying,
+    wkn character varying NOT NULL,
+    isin character varying,
+    google_symbol character varying,
+    category_id integer
+);
+
+
+ALTER TABLE public.products OWNER TO pi;
+
+--
+-- Name: products_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.products_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.products_id_seq OWNER TO pi;
+
+--
+-- Name: products_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.products_id_seq OWNED BY public.products.id;
+
+
+--
+-- Name: profits; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.profits (
+    id integer NOT NULL,
+    date timestamp with time zone NOT NULL,
+    value double precision NOT NULL,
+    product_id integer NOT NULL,
+    account_id integer NOT NULL
+);
+
+
+ALTER TABLE public.profits OWNER TO pi;
+
+--
+-- Name: TABLE profits; Type: COMMENT; Schema: public; Owner: pi
+--
+
+COMMENT ON TABLE public.profits IS 'notice profits from any product';
+
+
+--
+-- Name: profits_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.profits_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.profits_id_seq OWNER TO pi;
+
+--
+-- Name: profits_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.profits_id_seq OWNED BY public.profits.id;
+
+
+--
+-- Name: transfers; Type: TABLE; Schema: public; Owner: pi
+--
+
+CREATE TABLE public.transfers (
+    id integer NOT NULL,
+    date timestamp with time zone NOT NULL,
+    value double precision NOT NULL,
+    buchungstext character varying,
+    verwendungszweck character varying,
+    account_id integer NOT NULL,
+    co_account_id integer
+);
+
+
+ALTER TABLE public.transfers OWNER TO pi;
+
+--
+-- Name: TABLE transfers; Type: COMMENT; Schema: public; Owner: pi
+--
+
+COMMENT ON TABLE public.transfers IS 'account transfers to or from another account';
+
+
+--
+-- Name: transfers_id_seq; Type: SEQUENCE; Schema: public; Owner: pi
+--
+
+CREATE SEQUENCE public.transfers_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.transfers_id_seq OWNER TO pi;
+
+--
+-- Name: transfers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: pi
+--
+
+ALTER SEQUENCE public.transfers_id_seq OWNED BY public.transfers.id;
+
+
+--
+-- Name: view_latest_balances; Type: VIEW; Schema: public; Owner: pi
+--
+
+CREATE VIEW public.view_latest_balances AS
+ SELECT account_balances.id,
+    account_balances.date,
+    account_balances.balance,
+    account_balances.account_id
+   FROM (public.account_balances
+     JOIN ( SELECT account_balances_1.account_id,
+            max(account_balances_1.date) AS maxdate
+           FROM public.account_balances account_balances_1
+          GROUP BY account_balances_1.account_id) groupedab ON (((account_balances.account_id = groupedab.account_id) AND (account_balances.date = groupedab.maxdate))))
+  ORDER BY account_balances.account_id;
+
+
+ALTER TABLE public.view_latest_balances OWNER TO pi;
+
+--
+-- Name: view_accounts_balances; Type: VIEW; Schema: public; Owner: pi
+--
+
+CREATE VIEW public.view_accounts_balances AS
+ SELECT v.date,
+    v.balance,
+    t.type,
+    accounts.name AS account,
+    banks.name AS bank
+   FROM (((public.banks
+     JOIN public.accounts ON ((banks.id = accounts.bank_id)))
+     JOIN public.view_latest_balances v ON ((v.account_id = accounts.id)))
+     JOIN public.account_types t ON ((t.id = accounts.type_id)))
+  ORDER BY accounts.name;
+
+
+ALTER TABLE public.view_accounts_balances OWNER TO pi;
+
+--
+-- Name: VIEW view_accounts_balances; Type: COMMENT; Schema: public; Owner: pi
+--
+
+COMMENT ON VIEW public.view_accounts_balances IS 'combine 3 tables, accounts, account_balances and banks';
+
+
+--
+-- Name: view_list_table_names; Type: VIEW; Schema: public; Owner: pi
+--
+
+CREATE VIEW public.view_list_table_names AS
+ SELECT tables.table_name
+   FROM information_schema.tables
+  WHERE (((tables.table_type)::text = 'BASE TABLE'::text) AND ((tables.table_schema)::name = 'public'::name))
+  ORDER BY tables.table_type, tables.table_name;
+
+
+ALTER TABLE public.view_list_table_names OWNER TO pi;
+
+--
+-- Name: view_profits; Type: VIEW; Schema: public; Owner: pi
+--
+
+CREATE VIEW public.view_profits AS
+ SELECT profits.date,
+    p.name AS product,
+    profits.value,
+    accounts.name AS account,
+    t.category,
+    t.parent_category AS type
+   FROM (((public.profits
+     JOIN public.accounts ON ((accounts.id = profits.account_id)))
+     JOIN public.products p ON ((p.id = profits.product_id)))
+     JOIN public.product_categories t ON ((t.id = p.category_id)))
+  ORDER BY p.name;
+
+
+ALTER TABLE public.view_profits OWNER TO pi;
+
+--
+-- Name: VIEW view_profits; Type: COMMENT; Schema: public; Owner: pi
+--
+
+COMMENT ON VIEW public.view_profits IS 'profits list with products, categories, accounts';
+
+
+--
+-- Name: account_balances id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.account_balances ALTER COLUMN id SET DEFAULT nextval('public.account_balances_id_seq'::regclass);
+
+
+--
+-- Name: account_types id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.account_types ALTER COLUMN id SET DEFAULT nextval('public.account_types_id_seq'::regclass);
+
+
+--
+-- Name: accounts id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.accounts ALTER COLUMN id SET DEFAULT nextval('public.accounts_id_seq'::regclass);
+
+
+--
+-- Name: banks id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.banks ALTER COLUMN id SET DEFAULT nextval('public.banks_id_seq'::regclass);
+
+
+--
+-- Name: order_types id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.order_types ALTER COLUMN id SET DEFAULT nextval('public.order_types_id_seq'::regclass);
+
+
+--
+-- Name: orders id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.orders ALTER COLUMN id SET DEFAULT nextval('public.orders_id_seq'::regclass);
+
+
+--
+-- Name: product_categories id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.product_categories ALTER COLUMN id SET DEFAULT nextval('public.product_categories_id_seq'::regclass);
+
+
+--
+-- Name: product_values id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.product_values ALTER COLUMN id SET DEFAULT nextval('public.product_values_id_seq'::regclass);
+
+
+--
+-- Name: products id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.products ALTER COLUMN id SET DEFAULT nextval('public.products_id_seq'::regclass);
+
+
+--
+-- Name: profits id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.profits ALTER COLUMN id SET DEFAULT nextval('public.profits_id_seq'::regclass);
+
+
+--
+-- Name: transfers id; Type: DEFAULT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.transfers ALTER COLUMN id SET DEFAULT nextval('public.transfers_id_seq'::regclass);
+
+
+--
+-- Data for Name: account_balances; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.account_balances (id, date, balance, account_id) FROM stdin;
+2	2020-11-28 00:00:00+00	0.04	6
+3	2020-11-28 00:00:00+00	10000	7
+4	2020-11-28 00:00:00+00	5000	8
+5	2020-11-28 00:00:00+00	90000	4
+6	2020-11-28 00:00:00+00	42011.9	10
+7	2020-11-28 00:00:00+00	80056.92	11
+8	2020-11-28 00:00:00+00	38000	1
+9	2020-12-31 00:00:00+00	37000	1
+10	2020-12-31 00:00:00+00	42500	10
+11	2020-12-31 00:00:00+00	80057.45	11
+12	2020-12-31 00:00:00+00	40000	3
+13	2020-12-31 00:00:00+00	292.26	15
+14	2020-12-31 00:00:00+00	44800	14
+15	2020-12-31 00:00:00+00	40000	2
+16	2020-12-31 00:00:00+00	10249.69	17
+17	2020-12-31 00:00:00+00	7177.2	16
+18	2020-12-31 00:00:00+00	9011.94	19
+19	2020-12-31 00:00:00+00	41834.58	18
+20	2020-12-31 00:00:00+00	5000	12
+21	2020-12-31 00:00:00+00	90000	20
+22	2020-12-31 00:00:00+00	90000	4
+23	2020-12-31 00:00:00+00	10000	7
+24	2020-12-31 00:00:00+00	5000	8
+25	2020-12-31 00:00:00+00	102356.45	5
+1	1997-07-01 00:00:00+00	1	1
+26	1998-08-01 00:00:00+00	2	1
+\.
+
+
+--
+-- Data for Name: account_types; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.account_types (id, type) FROM stdin;
+1	giro
+2	tagesgeld
+3	festgeld
+4	depot
+5	verrechnung
+\.
+
+
+--
+-- Data for Name: accounts; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.accounts (id, name, type_id, bank_id) FROM stdin;
+1	DKB_depot	4	1
+3	comdirect_depot	4	3
+5	targo_giro	1	4
+6	targo_tages	2	4
+7	targo_fest	3	4
+8	targo_hoch_zins	3	4
+10	DKB_giro	1	1
+11	DKB_tages	2	1
+12	equateplus	4	6
+14	comdirect_verrechnung	5	3
+15	comdirect_giro	1	3
+16	consors_giro	1	2
+17	consors_fest	3	2
+18	consors_verrechnung	5	2
+19	consors_tages	2	2
+4	targo_depot	4	4
+2	consors_depot	4	2
+20	ikb_usd	3	5
+\.
+
+
+--
+-- Data for Name: banks; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.banks (id, name, link, operation) FROM stdin;
+1	dbk		complete
+2	consors		pure depot
+3	comdirect		depot, giro for housekeeping, plus kredit card
+4	targo		depot, giro of wei, plus kredit card
+5	ikb		us dollar pure
+6	equateplus UBS		siemens stock
+\.
+
+
+--
+-- Data for Name: order_types; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.order_types (id, type) FROM stdin;
+1	Plan
+2	Kauf
+3	Verkauf
+4	Sparplan
+\.
+
+
+--
+-- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.orders (id, kurs, stueck, provision, type_id, product_id, account_id, date) FROM stdin;
+8	29.928	16.7068	1.5	4	10	1	2020-10-20 00:00:00+00
+1	27.565	18.1389	1.5	4	3	1	2020-11-05 00:00:00+00
+2	28.49	17.55	1.5	4	3	1	2020-10-20 00:00:00+00
+3	5.54	90.2527	1.5	4	4	1	2020-10-20 00:00:00+00
+4	18.88	26.4831	1.5	4	5	1	2020-11-05 00:00:00+00
+6	577.6	0.8657	1.5	4	7	1	2020-11-05 00:00:00+00
+7	101.26	4.9378	1.5	4	9	1	2020-10-20 00:00:00+00
+9	28.305	17.6647	1.5	4	3	1	2020-10-05 00:00:00+00
+12	544.5	0.9183	1.5	4	7	1	2020-10-05 00:00:00+00
+13	27.465	18.205	1.5	4	3	1	2020-09-21 00:00:00+00
+10	5.153	193	10.83	2	4	1	2020-09-24 00:00:00+00
+14	5.427	184	10.83	2	4	1	2020-09-21 00:00:00+00
+15	5.34	93.633	1.5	4	4	1	2020-09-20 00:00:00+00
+16	39.135	12.7763	1.5	4	1	1	2020-09-20 00:00:00+00
+5	41.66	12.0019	1.5	4	1	1	2020-10-20 00:00:00+00
+17	5.94	168	10	2	4	1	2020-09-16 00:00:00+00
+18	5.73	174	10.83	2	4	1	2020-09-18 00:00:00+00
+19	20.875	23.9521	1.5	4	5	1	2020-09-07 00:00:00+00
+11	19.102	26.1753	1.5	4	5	1	2020-10-05 00:00:00+00
+20	253.15	1.975	0	4	2	3	2020-11-16 00:00:00+00
+21	241.7	2.068	0	4	2	3	2020-10-15 00:00:00+00
+22	237.7	2.103	0	4	2	3	2020-09-15 00:00:00+00
+24	224.1	2.231	0	4	2	3	2020-06-15 00:00:00+00
+25	36.445	13.7193	0	4	11	2	2020-11-16 00:00:00+00
+26	126.48	3.87413	0	4	8	2	2020-11-16 00:00:00+00
+27	31.105	16.07459	0	4	11	2	2020-11-02 00:00:00+00
+28	111	4.5045	0	4	8	2	2020-11-02 00:00:00+00
+29	96.05	5.20562	0	4	9	2	2020-11-02 00:00:00+00
+30	33.835	14.7776	0	4	11	2	2020-10-15 00:00:00+00
+31	122.48	4.00065	0	4	8	2	2020-10-15 00:00:00+00
+\.
+
+
+--
+-- Data for Name: product_categories; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.product_categories (id, category, parent_category) FROM stdin;
+1	index	
+2	ETF	index
+8	protect	anleihe
+3	zertifikat	
+4	express	zertifikat
+5	bonus	zertifikat
+6	cap	zertifikat
+7	classic	zertifikat
+\.
+
+
+--
+-- Data for Name: product_values; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.product_values (id, date, stueck, einstandskurs, account_id, product_id, kurs) FROM stdin;
+1	2020-01-22 00:00:00+00	21.5281	24.090839	1	5	25
+2	2020-02-02 00:00:00+00	21.5	518.63	1	5	23.43
+9	2020-02-04 00:00:00+00	21.5	25.63	1	5	23.43
+10	2020-02-05 00:00:00+00	21.5	500.63	1	5	23.43
+12	2020-12-22 00:00:00+00	21.5	518.63	1	5	23.43
+\.
+
+
+--
+-- Data for Name: products; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.products (id, name, wkn, isin, google_symbol, category_id) FROM stdin;
+2	LYX.D.JON.IN.AV.U.ETF D	541779	FR0007056841	DJAM	2
+3	ISHARES TECDAX UCITS ETF DE	593397	DE0005933972	EXS2	2
+4	iShares EURO STOXX Banks 30-15 UCI	628930	DE0006289309	EXX1	2
+5	iShares STOXX Europe 600 Oil & Gas UCITS ETF (DE)	A0H08M	DE000A0H08M3	EXH1	2
+7	iShares NASDAQ 100 UCITS ETF	A0YEDL	IE00B53SZB19	SXRV	2
+8	Xtrackers DAX® UCITS ETF 1	DBX1DA	LU0274211480	DBXD	2
+9	XTR.SWITZERLAND 1D	DBX1SM	LU0274221281	DBXS	2
+10	Lyxor S&P 500 UCITS ETF	LYX0FS	LU0496786574	LYPS	2
+11	XTR.EURO STOXX 50 1D	DBX1EU	LU0274211217	DBXE	2
+1	iShares STOXX Europe 600 Automobiles & Parts	A0Q4R2	DE000A0Q4R28	EXV5	2
+12	UC-HVB EXP.PL26 SX5E	HVB43V	DE000HVB43V0		4
+15	LBBW DEEP-EXP-Z 25 SX5E	LB17G0	DE000LB17G09		4
+13	Xtrackers MSCI USA UCITS ETF 1C	A1XB5V	IE00BJ0KDR00	X2HG	2
+16	5Y Memory Express Airbag Zertifikat auf Wirecard	PZ9RB4	DE000PZ9RB41		4
+17	EURO STOXX Sel. Div. 30	CS8CCE	DE000CS8CCE2		8
+19	LBBW BONUS-Z 24 BMW	LB2FC2	DE000LB2FC25		5
+20	LBBW DEEP-EXP-Z 25 SX5E	LB1344	DE000LB13443		4
+21	DJS 600 OIL & GAS Express 2025/09	LB17M1	DE000LB17M19 		4
+22	UC-HVB EXP.PL26 SX5E	HVB45T	DE000HVB45T9		4
+\.
+
+
+--
+-- Data for Name: profits; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.profits (id, date, value, product_id, account_id) FROM stdin;
+1	2020-11-11 00:00:00+00	123.55	2	3
+\.
+
+
+--
+-- Data for Name: transfers; Type: TABLE DATA; Schema: public; Owner: pi
+--
+
+COPY public.transfers (id, date, value, buchungstext, verwendungszweck, account_id, co_account_id) FROM stdin;
+\.
+
+
+--
+-- Name: account_balances_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.account_balances_id_seq', 26, true);
+
+
+--
+-- Name: account_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.account_types_id_seq', 5, true);
+
+
+--
+-- Name: accounts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.accounts_id_seq', 20, true);
+
+
+--
+-- Name: banks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.banks_id_seq', 6, true);
+
+
+--
+-- Name: order_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.order_types_id_seq', 4, true);
+
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.orders_id_seq', 31, true);
+
+
+--
+-- Name: product_categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.product_categories_id_seq', 8, true);
+
+
+--
+-- Name: product_values_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.product_values_id_seq', 12, true);
+
+
+--
+-- Name: products_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.products_id_seq', 22, true);
+
+
+--
+-- Name: profits_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.profits_id_seq', 1, true);
+
+
+--
+-- Name: transfers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pi
+--
+
+SELECT pg_catalog.setval('public.transfers_id_seq', 1, false);
+
+
+--
+-- Name: account_balances account_balances_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.account_balances
+    ADD CONSTRAINT account_balances_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: account_types account_types_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.account_types
+    ADD CONSTRAINT account_types_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: accounts accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.accounts
+    ADD CONSTRAINT accounts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: banks banks_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.banks
+    ADD CONSTRAINT banks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: order_types order_types_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.order_types
+    ADD CONSTRAINT order_types_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders orders_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: product_categories product_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.product_categories
+    ADD CONSTRAINT product_categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: product_values product_values_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.product_values
+    ADD CONSTRAINT product_values_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: profits profits_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.profits
+    ADD CONSTRAINT profits_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: products re_unique_product_wkn; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.products
+    ADD CONSTRAINT re_unique_product_wkn UNIQUE (wkn);
+
+
+--
+-- Name: transfers transfers_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.transfers
+    ADD CONSTRAINT transfers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: accounts unique_account; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.accounts
+    ADD CONSTRAINT unique_account UNIQUE (name);
+
+
+--
+-- Name: account_balances unique_balance; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.account_balances
+    ADD CONSTRAINT unique_balance UNIQUE (date, balance, account_id);
+
+
+--
+-- Name: order_types unique_order_type; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.order_types
+    ADD CONSTRAINT unique_order_type UNIQUE (type);
+
+
+--
+-- Name: orders unique_product_stueck_date; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT unique_product_stueck_date UNIQUE (kurs, stueck, date, product_id);
+
+
+--
+-- Name: products unique_product_wkn; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.products
+    ADD CONSTRAINT unique_product_wkn PRIMARY KEY (id) INCLUDE (wkn);
+
+
+--
+-- Name: transfers unique_record; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.transfers
+    ADD CONSTRAINT unique_record UNIQUE (date, value, verwendungszweck, account_id);
+
+
+--
+-- Name: CONSTRAINT unique_record ON transfers; Type: COMMENT; Schema: public; Owner: pi
+--
+
+COMMENT ON CONSTRAINT unique_record ON public.transfers IS 'one account, one date, won value, one verwendungszweck';
+
+
+--
+-- Name: account_types unique_type; Type: CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.account_types
+    ADD CONSTRAINT unique_type UNIQUE (type);
+
+
+--
+-- Name: fki_account_id; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX fki_account_id ON public.product_values USING btree (account_id);
+
+
+--
+-- Name: fki_accountb; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX fki_accountb ON public.accounts USING btree (bank_id);
+
+
+--
+-- Name: fki_balance_account_id; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX fki_balance_account_id ON public.account_balances USING btree (account_id);
+
+
+--
+-- Name: fki_order_account; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX fki_order_account ON public.orders USING btree (account_id);
+
+
+--
+-- Name: fki_order_product; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX fki_order_product ON public.orders USING btree (product_id);
+
+
+--
+-- Name: fki_order_type; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX fki_order_type ON public.orders USING btree (type_id);
+
+
+--
+-- Name: fki_product_id; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX fki_product_id ON public.product_values USING btree (product_id);
+
+
+--
+-- Name: fki_producttype; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX fki_producttype ON public.products USING btree (category_id);
+
+
+--
+-- Name: fki_profitaccount; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX fki_profitaccount ON public.profits USING btree (account_id);
+
+
+--
+-- Name: fki_profitproduct; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX fki_profitproduct ON public.profits USING btree (product_id);
+
+
+--
+-- Name: fki_trans_act; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX fki_trans_act ON public.transfers USING btree (account_id);
+
+
+--
+-- Name: fki_trans_co; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX fki_trans_co ON public.transfers USING btree (co_account_id);
+
+
+--
+-- Name: fki_type_id; Type: INDEX; Schema: public; Owner: pi
+--
+
+CREATE INDEX fki_type_id ON public.accounts USING btree (type_id);
+
+
+--
+-- Name: product_values account_id; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.product_values
+    ADD CONSTRAINT account_id FOREIGN KEY (account_id) REFERENCES public.accounts(id) NOT VALID;
+
+
+--
+-- Name: account_balances account_id; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.account_balances
+    ADD CONSTRAINT account_id FOREIGN KEY (account_id) REFERENCES public.accounts(id) NOT VALID;
+
+
+--
+-- Name: accounts accountb; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.accounts
+    ADD CONSTRAINT accountb FOREIGN KEY (bank_id) REFERENCES public.banks(id) NOT VALID;
+
+
+--
+-- Name: orders order_account; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT order_account FOREIGN KEY (account_id) REFERENCES public.accounts(id) NOT VALID;
+
+
+--
+-- Name: orders order_product; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT order_product FOREIGN KEY (product_id) REFERENCES public.products(id) NOT VALID;
+
+
+--
+-- Name: orders order_type; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT order_type FOREIGN KEY (type_id) REFERENCES public.order_types(id) NOT VALID;
+
+
+--
+-- Name: product_values product_id; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.product_values
+    ADD CONSTRAINT product_id FOREIGN KEY (product_id) REFERENCES public.products(id) NOT VALID;
+
+
+--
+-- Name: products producttype; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.products
+    ADD CONSTRAINT producttype FOREIGN KEY (category_id) REFERENCES public.product_categories(id) NOT VALID;
+
+
+--
+-- Name: profits profitaccount; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.profits
+    ADD CONSTRAINT profitaccount FOREIGN KEY (account_id) REFERENCES public.accounts(id) NOT VALID;
+
+
+--
+-- Name: profits profitproduct; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.profits
+    ADD CONSTRAINT profitproduct FOREIGN KEY (product_id) REFERENCES public.products(id) NOT VALID;
+
+
+--
+-- Name: transfers trans_act; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.transfers
+    ADD CONSTRAINT trans_act FOREIGN KEY (account_id) REFERENCES public.accounts(id) NOT VALID;
+
+
+--
+-- Name: CONSTRAINT trans_act ON transfers; Type: COMMENT; Schema: public; Owner: pi
+--
+
+COMMENT ON CONSTRAINT trans_act ON public.transfers IS 'self account id';
+
+
+--
+-- Name: transfers trans_co; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.transfers
+    ADD CONSTRAINT trans_co FOREIGN KEY (co_account_id) REFERENCES public.accounts(id) NOT VALID;
+
+
+--
+-- Name: accounts type_id; Type: FK CONSTRAINT; Schema: public; Owner: pi
+--
+
+ALTER TABLE ONLY public.accounts
+    ADD CONSTRAINT type_id FOREIGN KEY (type_id) REFERENCES public.account_types(id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
