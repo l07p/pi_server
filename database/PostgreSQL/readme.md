@@ -2,6 +2,7 @@
 refer to onenote 银行金融 - 管理 - PostgreSQL and https://blog.logrocket.com/setting-up-a-remote-postgres-database-server-on-ubuntu-18-04/
 
 1. [Configuration](#Configuration)
+2. [Backup](#Backup)
 
 steps | note
 ------- | --------------
@@ -14,3 +15,7 @@ restart service | sudo systemctl restart postgresql
 ![diagram](postgresql_conf.png)
 
 ![diagram](pg_hba_conf.png)
+
+## Backup
+-----------|------------
+backup folder | media/backup
