@@ -1,5 +1,8 @@
 # README
 ## achieve
+
+| meaning | definition |
+|-----------------|-----------------------|
 | end mount to | /media/lnmycloude |
 | Access mycloud to ubuntu: |/media/lnmycloud.|
 | User should be |net, |
