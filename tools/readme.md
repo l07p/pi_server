@@ -3,8 +3,7 @@
 
 | meaning | definition |
 |-----------------|-----------------------|
-| end mount to | /media/lnmycloude |
-| Access mycloud to ubuntu: |/media/lnmycloud.|
+| Access mycloud to ubuntu: |/media/lnmycloud |
 | User should be |net, |
 | password should be| uber500. |
 | mount command | Sudo mount -a accesses /media/lnmycloud to net@192.168.178.33 |
