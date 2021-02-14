@@ -15,7 +15,7 @@ class Product_values:
       
 
     def from_account(self, _account):
-        self.csv.read_account(_account)
+        self.csv.read_depot(_account)
         self.data_str = self.csv.date_str
         self.account_id = 1
 
@@ -31,7 +31,8 @@ def main(_filepath, _account):
     o1 = Product_values(_filepath)
     o1.from_account(_account)
     o1.product.get_id_from("""SELECT public.get_product_id_with_isin('{}');""", 'DE000A0H08M3')
-    o1.update_product_values()
+    print(o1.product.id)
+    # o1.update_product_values()
 
     # print(o1.date_str)
     # print(o1.csv._df)
