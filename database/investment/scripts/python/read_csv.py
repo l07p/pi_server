@@ -169,7 +169,10 @@ class Read_csv:
 
     def update_sheet_values(self, _json_path):
         if self.account == None:
+            print('no account is given at all.')
             return None
+
+        
 
         if self.account == 'comdirect_depot':
             self.update_sheet_values_comdirect(_json_path)
@@ -178,7 +181,7 @@ class Read_csv:
         elif self.account == 'DKB_depot':
             self.update_sheet_values_dkb(_json_path)
         else:
-            print('------no account is selected.')
+            print('------no correct account is selected.')
             pass
         pass
 
@@ -200,7 +203,7 @@ class Read_csv:
             self.account = _account
         if _account == 'DKB_depot':
             self.read_dkb_depot()
-        elif _account == 'Consors_depot':
+        elif _account == 'consors_depot':
             self.read_consors_depot()
         elif _account == 'comdirect_depot':
             self.read_comdirect_depot()
@@ -229,20 +232,21 @@ if __name__ == "__main__":
     
     parser.add_argument('--filepath',
                         help='input file and its folder together',
-                        default=r"C:\Users\saver\Downloads\depotuebersicht_9787270226_20210208-1525.csv")
+                        # default=r"C:\Users\saver\Downloads\depotuebersicht_9787270226_20210208-1525.csv")
+                        default=r"C:\Users\saver\Downloads\Depotübersicht_788267505 (10).csv")
                         # default=r"C:\Users\saver\Downloads\depotuebersicht_9787270226_20210112-1028.csv")
                         # default=r"C:\Users\saver\Downloads\502081722 (9).csv")
                         # default=r"/media/lnmycloud/archives/banks/consors/Depotübersicht_788267505 (5).csv")
 
     parser.add_argument('--account',
                         help='input account name',
-                        # default=r"Consors_depot")
-                        default=r"comdirect_depot")
+                        default=r"consors_depot")
+                        # default=r"comdirect_depot")
 
     parser.add_argument('--json_path',
                         help='input json file path',
-                        # default=r"C:\Users\saver\AppData\gspread\SheetsPython-ea71b57285ec.json")
-                        default=r"/media/lnmycloud/certificates/gspread/SheetsPython-ea71b57285ec.json")
+                        default=r"C:\Users\saver\AppData\gspread\SheetsPython-ea71b57285ec.json")
+                        # default=r"/media/lnmycloud/certificates/gspread/SheetsPython-ea71b57285ec.json")
 
     args = parser.parse_args()
 
