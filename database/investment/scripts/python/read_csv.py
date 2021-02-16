@@ -213,6 +213,9 @@ class Read_csv:
 # dd = df.to_dict('records')
 
 def main(_filepath, _account, _json_path):
+    print(_filepath)
+    print(_account)
+    print(_json_path)
     o1 = Read_csv(_filepath)
     o1.read_depot(_account)
     o1.update_sheet_values(_json_path)
