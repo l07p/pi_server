@@ -173,7 +173,7 @@ class Read_csv:
 
         if self.account == 'comdirect_depot':
             self.update_sheet_values_comdirect(_json_path)
-        elif self.account == 'Consors_depot':
+        elif self.account == 'consors_depot':
             self.update_sheet_values_consors(_json_path)
         elif self.account == 'DKB_depot':
             self.update_sheet_values_dkb(_json_path)
@@ -188,7 +188,7 @@ class Read_csv:
 
         if _account == 'DKB_giro':
             self.read_dkb_giro()
-        # elif _account == 'Consors_depot':
+        # elif _account == 'consors_depot':
         #     self.read_consors_depot()
         # elif _account == 'comdirect_depot':
         #     self.read_comdirect_depot()
