@@ -180,6 +180,7 @@ def main(_wkn, _isin, _name, _google_symbol):
     # p.insert_product('HVB43V', 'DE000HVB43V0', 'UC-HVB EXP.PL26 SX5E', '', 4) # (_wkn, _isin, _name, _google_symbol, _category_id)
     # p.insert_product('A2QC5J', 'IE00BMC38736', 'VanEck Vectors Semiconductor UCITS', 'VVSM', 2) # (_wkn, _isin, _name, _google_symbol, _category_id)
     # p.insert_product('A0MW0M', 'IE00B1XNHC34', 'iShares Global Clean Energy UCITS', 'IQQH', 2) # (_wkn, _isin, _name, _google_symbol, _category_id)
+    p.insert_product('PR8E18', 'DE000PR8E180', '3Y Memory Express Zertifikat auf EURO STOXX 50', '', 3) # (_wkn, _isin, _name, _google_symbol, _category_id)
     
     # p.insert_product('PZ9RB4', 'DE000PZ9RB41', '5Y Memory Express Airbag Zertifikat auf Wirecard', '', 4)
     # ret = p.get_product_id_with_wkn('DBX1SM')
