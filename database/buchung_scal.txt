@@ -1,0 +1,472 @@
+21Shares Ethereum ETP
+2.645,27 €
+500
+WKNA2T68Z
+ISINCH0454664027
+25
+19
+€
+
+Heute
+-3,49%
+|
+-0,91 €
+23,00
+24,00
+25,00
+26,00
+27,00
+28,00
+25,193
+25,193
+Gestern
+15:00
+Heute
+15:00
+Heute, 15:39
+25,193 €
+Eckdaten
+Ihre Position
+2.645,27 €
+3.370,91 € bei Kauf
+=
+105
+Stück
+×
+25,19 €
+∅ 32,10 € bei Kauf
+-725,65 €
+-21,53%
+Unrealisierte Rendite seit Kauf
+Transaktionen
+21.05.2021
+Limitpreis
+25,10
+Ausgeführte Stückzahl
+10
+Ausführungspreis
+25,10
+Kurswert
+251,00
+20.05.2021
+Limitpreis
+25,50
+Ausgeführte Stückzahl
+10
+Ausführungspreis
+25,49
+Kurswert
+254,90
+19.05.2021
+Limitpreis
+27,50
+Ausgeführte Stückzahl
+10
+Ausführungspreis
+27,494
+Kurswert
+274,94
+18.05.2021
+Limitpreis
+32,70
+Ausgeführte Stückzahl
+10
+Ausführungspreis
+32,702
+Kurswert
+327,02
+17.05.2021
+Limitpreis
+32,50
+Ausgeführte Stückzahl
+30
+Ausführungspreis
+32,498
+Kurswert
+974,94
+Limitpreis
+31,00
+Ausgeführte Stückzahl
+10
+Ausführungspreis
+30,994
+Kurswert
+309,94
+13.05.2021
+Limitpreis
+36,00
+Ausgeführte Stückzahl
+10
+Ausführungspreis
+35,998
+Kurswert
+359,98
+11.05.2021
+Limitpreis
+36,80
+Ausgeführte Stückzahl
+10
+Ausführungspreis
+36,792
+Kurswert
+367,92
+10.05.2021
+Limitpreis
+38,50
+Ausgeführte Stückzahl
+25
+Ausführungspreis
+38,486
+Kurswert
+962,15
+Marktdaten: gettex, bereitgestellt von TeleTrader Software GmbH
+Dokumente
+Risikohinweise
+Datenschutz
+Impressum
+VanEck Vectors Ethereum ETN
+3.209,13 €
+1
+1.000
+WKNA3GPSP
+ISINDE000A3GPSP7
+13
+60
+€
+
+Heute
+-3,17%
+|
+-0,45 €
+12,60
+13,00
+13,40
+13,80
+14,20
+14,60
+15,00
+15,40
+13,598
+13,598
+Gestern
+15:00
+Heute
+15:00
+Eckdaten
+Ihre Position
+3.209,13 €
+3.790,73 € bei Kauf
+=
+236
+Stück
+×
+13,60 €
+∅ 16,06 € bei Kauf
+-581,60 €
+-15,34%
+Unrealisierte Rendite seit Kauf
+Transaktionen
+OFFEN
+21.05.2021
+Limitpreis
+13,60
+Ausgeführte Stückzahl
+20
+Ausführungspreis
+13,586
+Kurswert
+271,72
+20.05.2021
+Limitpreis
+14,00
+Ausgeführte Stückzahl
+20
+Ausführungspreis
+13,848
+Kurswert
+276,96
+19.05.2021
+Limitpreis
+14,50
+Ausgeführte Stückzahl
+30
+Ausführungspreis
+14,496
+Kurswert
+434,88
+Limitpreis
+13,80
+Ausgeführte Stückzahl
+20
+Ausführungspreis
+13,77
+Kurswert
+275,40
+18.05.2021
+Limitpreis
+17,50
+Ausgeführte Stückzahl
+60
+Ausführungspreis
+17,506
+Kurswert
+1.050,36
+17.05.2021
+Limitpreis
+17,70
+Ausgeführte Stückzahl
+56
+Ausführungspreis
+17,585
+Kurswert
+984,76
+Limitpreis
+17,00
+Ausgeführte Stückzahl
+30
+Ausführungspreis
+16,867
+Kurswert
+506,01
+11.05.2021
+07.05.2021
+Limitpreis
+17,35
+Ausgeführte Stückzahl
+60
+Ausführungspreis
+17,35
+Kurswert
+1.041,00
+06.05.2021
+Ausgeführte Stückzahl
+20
+Ausführungspreis
+17,638
+Kurswert
+352,76
+Limitpreis
+18,40
+Ausgeführte Stückzahl
+60
+Ausführungspreis
+18,343
+Kurswert
+1.100,58
+05.05.2021
+Limitpreis
+17,23
+Ausgeführte Stückzahl
+20
+Ausführungspreis
+17,212
+Kurswert
+344,24
+Marktdaten: gettex, bereitgestellt von TeleTrader Software GmbH
+Dokumente
+Risikohinweise
+Datenschutz
+Impressum
+VanEck Vectors Bitcoin ETN
+4.814,56 €
+1
+1.000
+WKNA28M8D
+ISINDE000A28M8D0
+18
+76
+€
+
+Heute
++0,25%
+|
++0,05 €
+17,40
+17,80
+18,20
+18,60
+19,00
+19,40
+18,755
+18,755
+Gestern
+15:00
+Heute
+15:00
+Eckdaten
+Ihre Position
+4.814,56 €
+6.060,81 € bei Kauf
+=
+256,708
+Stück
+×
+18,76 €
+∅ 23,61 € bei Kauf
+-1.246,25 €
+-20,56%
+Unrealisierte Rendite seit Kauf
+Transaktionen
+OFFEN
+21.05.2021
+20.05.2021
+Limitpreis
+18,50
+Ausgeführte Stückzahl
+20
+Ausführungspreis
+18,489
+Kurswert
+369,78
+19.05.2021
+Limitpreis
+18,20
+Ausgeführte Stückzahl
+20
+Ausführungspreis
+18,198
+Kurswert
+363,96
+18.05.2021
+Limitpreis
+20,50
+Ausgeführte Stückzahl
+20
+Ausführungspreis
+20,50
+Kurswert
+410,00
+17.05.2021
+Limitpreis
+20,50
+Ausgeführte Stückzahl
+48
+Ausführungspreis
+20,4979
+Kurswert
+983,90
+12.05.2021
+Limitpreis
+25,60
+Ausgeführte Stückzahl
+20
+Ausführungspreis
+25,588
+Kurswert
+511,76
+Limitpreis
+25,50
+Ausgeführte Stückzahl
+20
+Ausführungspreis
+25,49
+Kurswert
+509,80
+11.05.2021
+Limitpreis
+25,30
+Ausgeführte Stückzahl
+20
+Ausführungspreis
+25,298
+Kurswert
+505,96
+10.05.2021
+Limitpreis
+26,30
+Ausgeführte Stückzahl
+20
+Ausführungspreis
+26,30
+Kurswert
+526,00
+06.05.2021
+04.05.2021
+Limitpreis
+26,00
+Ausgeführte Stückzahl
+20
+Ausführungspreis
+26,00
+Kurswert
+520,00
+Limitpreis
+25,00
+Ausgeführte Stückzahl
+20
+Ausführungspreis
+24,986
+Kurswert
+499,72
+Ausgeführte Stückzahl
+38,708
+Ausführungspreis
+25,8339
+Kurswert
+999,98
+03.05.2021
+Limitpreis
+27,00
+Ausgeführte Stückzahl
+30
+Ausführungspreis
+26,994
+Kurswert
+809,82
+30.04.2021
+Limitpreis
+24,92
+Ausgeführte Stückzahl
+20
+Ausführungspreis
+24,92
+Kurswert
+498,40
+Limitpreis
+25,35
+Ausgeführte Stückzahl
+60
+Ausführungspreis
+25,354
+Kurswert
+1.521,24
+28.04.2021
+Limitpreis
+25,00
+Ausgeführte Stückzahl
+20
+Ausführungspreis
+25,00
+Kurswert
+500,00
+Limitpreis
+24,90
+Ausgeführte Stückzahl
+20
+Ausführungspreis
+24,90
+Kurswert
+498,00
+27.04.2021
+Limitpreis
+25,25
+Ausgeführte Stückzahl
+20
+Ausführungspreis
+25,25
+Kurswert
+505,00
+23.04.2021
+Limitpreis
+22,50
+Ausgeführte Stückzahl
+20
+Ausführungspreis
+22,496
+Kurswert
+449,92
+Marktdaten: gettex, bereitgestellt von TeleTrader Software GmbH
+Dokumente
+Risikohinweise
+Datenschutz
+Impressum

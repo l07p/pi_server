@@ -88,7 +88,7 @@ class Read_csv:
         pass
 
     def read_consors_depot(self):
-        df = pd.read_csv(self.filepath, encoding='utf8', low_memory=False, sep=';', skiprows=6, nrows=7)   
+        df = pd.read_csv(self.filepath, encoding='utf8', low_memory=False, sep=';', skiprows=6, nrows=11)   
         df = df.drop(columns=['Währung/Prozent', 'Währung/Prozent.1', 'Währung/Prozent.2', 'Währung/Prozent.3'])
         float_data = ['Stück/Nominal', 'Einstandskurs inkl. NK', 'Einstandswert','Veränderung Intraday', 'Kurs', 'Gesamtwert EUR', 'Entwicklung absolut', 'Entwicklung prozentual']
         for i in float_data:
@@ -233,7 +233,7 @@ if __name__ == "__main__":
     parser.add_argument('--filepath',
                         help='input file and its folder together',
                         # default=r"C:\Users\saver\Downloads\depotuebersicht_9787270226_20210208-1525.csv")
-                        default=r"C:\Users\saver\Downloads\Depotübersicht_788267505 (10).csv")
+                        default=r"C:\Users\saver\Downloads\Depotübersicht_788267505 (20).csv")
                         # default=r"C:\Users\saver\Downloads\depotuebersicht_9787270226_20210112-1028.csv")
                         # default=r"C:\Users\saver\Downloads\502081722 (9).csv")
                         # default=r"/media/lnmycloud/archives/banks/consors/Depotübersicht_788267505 (5).csv")
