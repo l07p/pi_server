@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  ubuntu:
+    image: ubuntu:latest
+    container_name: ubuntu_server
+    networks:
+      - my_network
+    volumes:
+      - ./data:/data
+    command: sleep infinity
+
+  postgresql:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+    networks:
+      - my_network
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  tomcat:
+    image: tomcat:latest
+    container_name: tomcat_server
+    networks:
+      - my_network
+    ports:
+      - "8080:8080"
+    volumes:
+      - C:\GIT\pi_server\websites\webapps:/usr/local/tomcat/webapps
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins_server
+    user: root
+    networks:
+      - my_network
+    ports:
+      - "8081:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
+
+volumes:
+  postgres_data:
+  jenkins_home:
+
+networks:
+  my_network:
+    driver: bridge
