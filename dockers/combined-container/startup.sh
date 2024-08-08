@@ -4,7 +4,7 @@
 service postgresql start
 
 # Start Tomcat
-service tomcat9 start
+/opt/tomcat/bin/startup.sh
 
 # Start Jenkins
 service jenkins start

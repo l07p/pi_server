@@ -11,10 +11,6 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     postgresql \
     postgresql-contrib \
-    tomcat9 \
-    tomcat9-admin \
-    tomcat9-common \
-    tomcat9-user \
     && apt-get clean
 
 # Setup PostgreSQL
@@ -22,8 +18,11 @@ RUN service postgresql start && \
     sudo -u postgres psql -c "CREATE USER user WITH PASSWORD 'password';" && \
     sudo -u postgres psql -c "CREATE DATABASE mydatabase OWNER user;"
 
-# Setup Tomcat
-COPY webapps /var/lib/tomcat9/webapps
+# Install Tomcat
+RUN wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.91/bin/apache-tomcat-9.0.91.tar.gz -O /tmp/tomcat.tar.gz && \
+    mkdir /opt/tomcat && \
+    tar xzvf /tmp/tomcat.tar.gz -C /opt/tomcat --strip-components=1 && \
+    rm /tmp/tomcat.tar.gz
 
 # Install Jenkins
 RUN wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | apt-key add - && \
