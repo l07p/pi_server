@@ -5,8 +5,8 @@ services:
     image: dpage/pgadmin4:latest
     container_name: pgadmin_container
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@example.com  # Change this to your preferred email
-      PGADMIN_DEFAULT_PASSWORD: your_password    # Change this to your preferred password
+      PGADMIN_DEFAULT_EMAIL: l07p@gmx.de  # Change this to your preferred email
+      PGADMIN_DEFAULT_PASSWORD: ueber500mal    # Change this to your preferred password
     volumes:
       - /home/ubuntu/dockers/pgadmin/data:/var/lib/pgadmin
     ports:
