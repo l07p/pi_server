@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin_container
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com  # Change this to your preferred email
+      PGADMIN_DEFAULT_PASSWORD: your_password    # Change this to your preferred password
+    volumes:
+      - /home/ubuntu/dockers/pgadmin/data:/var/lib/pgadmin
+    ports:
+      - "5050:80"  # Map port 5050 on your host to port 80 in the container (pgAdmin web interface)
+    restart: always
