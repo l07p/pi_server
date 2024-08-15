@@ -19,3 +19,16 @@ AND c.title NOT LIKE '%single%'
 AND c.title NOT LIKE '%year%'
 AND c.title NOT LIKE '%month%'
 ORDER BY u.last_name;
+
+
+SELECT
+    u.*,
+	wc.*
+FROM
+    tbl_users u
+JOIN
+    view_find_contract_the_user_belongs_to wc
+ON
+    u.id = wc.user_id
+ORDER BY wc.title
+;
