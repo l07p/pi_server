@@ -5,11 +5,11 @@ def insert_bank_data(bank_name, bank_address):
     try:
         # Establish the connection
         conn = psycopg2.connect(
-            dbname="your_database_name",
-            user="your_username",
-            password="your_password",
-            host="your_host",
-            port="your_port"  # Default port is 5432
+            dbname="investment",
+            user="postgres",
+            password="root",
+            host="192.168.178.79",
+            port="5432"  # Default port is 5432
         )
         
         # Create a cursor object
@@ -17,7 +17,7 @@ def insert_bank_data(bank_name, bank_address):
         
         # Define the SQL INSERT query
         insert_query = sql.SQL("""
-            INSERT INTO bank (bank_name, bank_address)
+            INSERT INTO banks (bank_name, bank_code)
             VALUES (%s, %s)
             RETURNING bank_id;
         """)
@@ -42,3 +42,5 @@ def insert_bank_data(bank_name, bank_address):
         cur.close()
         conn.close()
 
+# Example usage
+insert_bank_data("Cash as Bank", "BAR100MIL")

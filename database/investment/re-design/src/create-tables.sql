@@ -1,5 +1,5 @@
 CREATE TABLE banks (
-    bank_id SERIAL PRIMARY KEY,
+    bank_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     bank_name VARCHAR(255) NOT NULL,
     bank_code VARCHAR(10) UNIQUE NOT NULL,
     address TEXT,
@@ -7,13 +7,13 @@ CREATE TABLE banks (
 );
 
 CREATE TABLE account_types (
-    account_type_id SERIAL PRIMARY KEY,
+    account_type_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     account_type_name VARCHAR(50) NOT NULL,
     description TEXT
 );
 
 CREATE TABLE accounts (
-    account_id SERIAL PRIMARY KEY,
+    account_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     account_number VARCHAR(20) UNIQUE NOT NULL,
     bank_id INT REFERENCES banks(bank_id) ON DELETE CASCADE,
     account_type_id INT REFERENCES account_types(account_type_id) ON DELETE SET NULL,
@@ -25,7 +25,7 @@ CREATE TABLE accounts (
 );
 
 CREATE TABLE transfers (
-    transfer_id SERIAL PRIMARY KEY,
+    transfer_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     from_account_id INT REFERENCES accounts(account_id) ON DELETE CASCADE,
     to_account_id INT REFERENCES accounts(account_id) ON DELETE CASCADE,
     transfer_amount DECIMAL(15,2) NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE transfers (
 );
 
 CREATE TABLE reports (
-    report_id SERIAL PRIMARY KEY,
+    report_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     account_id INT REFERENCES accounts(account_id) ON DELETE CASCADE,
     report_date DATE NOT NULL,
     balance DECIMAL(15,2) NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE reports (
 );
 
 CREATE TABLE taxes (
-    tax_id SERIAL PRIMARY KEY,
+    tax_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     account_id INT REFERENCES accounts(account_id) ON DELETE CASCADE,
     tax_year INT NOT NULL,
     total_taxable_income DECIMAL(15,2) NOT NULL,
