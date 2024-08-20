@@ -1,18 +1,19 @@
-# Use a base image with Java, Node.js, and npm
-FROM openjdk:11-jdk-slim
+# Use an official Java image as the base
+FROM openjdk:11-jdk
 
-# Install Node.js and npm
-RUN apt-get update && apt-get install -y \
-    nodejs \
-    npm \
-    git \
+# Install Node.js and Angular CLI
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+    && apt-get install -y nodejs \
     && npm install -g @angular/cli
 
-# Set the working directory inside the container
+# Install Vim
+RUN apt-get update && apt-get install -y vim
+
+# Set the working directory in the container
 WORKDIR /usr/src/app
 
-# Expose port for Angular development server
-EXPOSE 4200
+# Expose necessary ports (example: Angular port and Tomcat port)
+EXPOSE 4200 8080
 
-# Command to keep the container running
+# Specify the command to keep the container running
 CMD ["tail", "-f", "/dev/null"]
