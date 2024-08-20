@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y vim
 WORKDIR /usr/src/app
 
 # Expose necessary ports (example: Angular port and Tomcat port)
-EXPOSE 4200 8080
+EXPOSE 4200 8081
 
 # Specify the command to keep the container running
 CMD ["tail", "-f", "/dev/null"]
