@@ -6,4 +6,4 @@ services:
       - ./app:/usr/src/app
     ports:
       - "4200:4200"  # Angular app
-      - "8080:8080"  # Tomcat or any other server
+      - "8081:8081"  # Tomcat or any other server
