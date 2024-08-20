@@ -22,3 +22,4 @@
 
 - Build and Run the Docker Container
 - Access the Container and Use 'vim'
+![image](https://github.com/user-attachments/assets/e953019c-9824-4d2a-a85c-6b993e349409)
