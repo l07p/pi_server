@@ -1,8 +1,8 @@
 # Use an official Java image as the base
 FROM openjdk:11-jdk
 
-# Install Node.js and Angular CLI
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+# Install Node.js 18.x and Angular CLI
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g @angular/cli
 
